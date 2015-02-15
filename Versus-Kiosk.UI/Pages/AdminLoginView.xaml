@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="VersusKiosk.UI.Pages.AdminLoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="_this"
+             d:DesignHeight="1024" d:DesignWidth="1200"
+			 FocusManager.FocusedElement="{Binding ElementName=PasswordBox}">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="1*" />
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Text="Please enter admin password:" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		<TextBox Grid.Row="1" Name="PasswordBox" Text="{Binding Password}" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" TextAlignment="Center" />
+		<Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Button Grid.Row="0" Grid.Column="0" Command="{Binding DigitCommand}" CommandParameter="1" Content="1" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="0" Grid.Column="1" Command="{Binding DigitCommand}" CommandParameter="2" Content="2" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="0" Grid.Column="2" Command="{Binding DigitCommand}" CommandParameter="3" Content="3" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="1" Grid.Column="0" Command="{Binding DigitCommand}" CommandParameter="4" Content="4" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="1" Grid.Column="1" Command="{Binding DigitCommand}" CommandParameter="5" Content="5" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="1" Grid.Column="2" Command="{Binding DigitCommand}" CommandParameter="6" Content="6" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="2" Grid.Column="0" Command="{Binding DigitCommand}" CommandParameter="7" Content="7" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="2" Grid.Column="1" Command="{Binding DigitCommand}" CommandParameter="8" Content="8" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="2" Grid.Column="2" Command="{Binding DigitCommand}" CommandParameter="9" Content="9" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="3" Grid.Column="0" Command="{Binding DigitCommand}" CommandParameter="*" Content="*" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="3" Grid.Column="1" Command="{Binding DigitCommand}" CommandParameter="0" Content="0" Width="100" Height="100" Focusable="False" FontSize="80"/>
+			<Button Grid.Row="3" Grid.Column="2" Command="{Binding DigitCommand}" CommandParameter="#" Content="#" Width="100" Height="100" Focusable="False" FontSize="80"/>
+		</Grid>
+		
+		<StackPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+			<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
+				<TextBlock Text="Cancel" Margin="20"/>
+			</Button>
+			<Button Command="{Binding NextCommand}" Width="200" Margin="100,0,100,0" IsDefault="True">
+				<TextBlock Text="Next" Margin="20" />
+			</Button>
+		</StackPanel>
+
+	</Grid>
+	
+</UserControl>

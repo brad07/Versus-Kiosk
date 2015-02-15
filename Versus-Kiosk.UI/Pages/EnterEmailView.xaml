@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="VersusKiosk.UI.Pages.EnterEmailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="_this"
+			 FocusManager.FocusedElement="{Binding ElementName=EmailBox}"
+             d:DesignHeight="800" d:DesignWidth="960">
+	
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="0.2*" />
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="{Binding DisplayPlayerNum, StringFormat='Player {0} please enter your email address:'}" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock Grid.Row="1" />
+		<TextBlock Grid.Row="2" Grid.Column="1" Text="Email:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+		<TextBox Name="EmailBox" Grid.Row="2" Grid.Column="2" Text="{Binding Player.Email}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="False" />
+		<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding EmailError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
+		<TextBlock Grid.Row="5" Grid.Column="2" FontStyle="Italic"
+				   Text="* Your email address is used to send your workout results and identify you in future sessions. By leaving this field blank you will instead be given the chance to enter a name and will see your results at the end of the session for this workout only."
+				   TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
+		<TextBlock Grid.Row="6" />
+
+		<StackPanel Grid.Row="7" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+			<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
+				<TextBlock Text="Cancel" Margin="20"/>
+			</Button>
+			<Button Command="{Binding OkCommand}" Width="200" Margin="100,0,100,0">
+				<TextBlock Text="Ok" Margin="20"/>
+			</Button>
+		</StackPanel>
+	</Grid>
+</UserControl>

@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace VersusKiosk.UI.Pages
+{
+	/// <summary>
+	/// Interaction logic for ChooseWorkoutView.xaml
+	/// </summary>
+	public partial class ChooseWorkoutView : UserControl
+	{
+		public ChooseWorkoutView()
+		{
+			InitializeComponent();
+			this.mediaPlayer.Play();	// well this is pretty silly, isn't it....?
+		}
+
+		private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
+		{
+			this.mediaPlayer.Position = TimeSpan.Zero;
+			this.mediaPlayer.Play();	// well this is pretty silly, isn't it....?
+		}
+	}
+}

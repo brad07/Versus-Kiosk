@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="VersusKiosk.UI.Pages.PlayerDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+			 x:Name="_this"
+			 FocusManager.FocusedElement="{Binding ElementName=FirstNameBox}"
+             d:DesignHeight="800" d:DesignWidth="960">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="0.2*" />
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="{Binding DisplayPlayerNum, StringFormat='Player {0} please enter your details:'}" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock Grid.Row="1" />
+		<TextBlock Grid.Row="2" Grid.Column="1" Text="First Name:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+		<TextBox Grid.Row="2" Grid.Column="2" Name="FirstNameBox" Text="{Binding Player.FirstName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="300" />
+		<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding FirstNameError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
+		<TextBlock Grid.Row="4" Grid.Column="1" Text="Last Name:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+		<TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Player.LastName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="300" />
+		<TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding LastNameError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
+		<TextBlock Grid.Row="6" Grid.Column="1" Text="Weight (kg):" HorizontalAlignment="Right" VerticalAlignment="Center" />
+		<TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Player.Weight, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="150"/>
+		<TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding WeightError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
+		<TextBlock Grid.Row="8" Grid.Column="2"  Text="* Weight is required in order to provide a safe workout" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
+		<TextBlock Grid.Row="9" />
+		
+		<StackPanel Grid.Row="10" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+			<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
+				<TextBlock Text="Cancel" Margin="20"/>
+			</Button>
+			<Button Command="{Binding NextCommand}" Width="200" Margin="100,0,100,0" IsDefault="True">
+				<TextBlock Text="Next" Margin="20"/>
+			</Button>
+		</StackPanel>
+	</Grid>
+</UserControl>

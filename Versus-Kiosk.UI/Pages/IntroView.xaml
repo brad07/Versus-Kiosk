@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="VersusKiosk.UI.Pages.IntroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+			 xmlns:cmd ="http://www.galasoft.ch/mvvmlight"
+             mc:Ignorable="d"
+			 x:Name="_this"
+             d:DesignHeight="1024" d:DesignWidth="1200">
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="PreviewKeyDown">
+			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="KeyDown">
+			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="MouseDown">
+			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<UserControl.Resources>
+
+		<DataTemplate x:Key="connectedTemplate">
+			<Grid Background="Black">
+				<MediaElement x:Name="mediaPlayer" Source=".\Media\main.mov" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Play" Stretch="UniformToFill" MediaEnded="OnMediaEnded" />
+				<!--<TextBlock Text="Touch Screen To Begin" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" />-->
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+					<TextBlock Text="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades, StringFormat='Stations Available: {0}'}" HorizontalAlignment="Center" Style="{StaticResource Header}" Foreground="White" />
+					<TextBlock HorizontalAlignment="Center" Foreground="White" >
+						<TextBlock.Style>
+							<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Header}">
+								<Setter Property="Text" Value="Touch Screen To Begin" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="0">
+										<Setter Property="Text" Value="Please try again later!" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</TextBlock.Style>
+					</TextBlock>
+				</StackPanel>
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="disconnectedTemplate">
+			<Grid>
+				<TextBlock Text="Connecting to server..." Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+			</Grid>
+		</DataTemplate>
+
+	</UserControl.Resources>
+
+	<Grid>
+		<UserControl>
+			<UserControl.Style>
+				<Style TargetType="{x:Type UserControl}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Parent.Connected}" Value="False">
+							<Setter Property="ContentTemplate" Value="{StaticResource disconnectedTemplate}" />
+						</DataTrigger>
+						<DataTrigger Binding="{Binding Parent.Connected}" Value="True">
+							<Setter Property="ContentTemplate" Value="{StaticResource connectedTemplate}" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</UserControl.Style>
+		</UserControl>
+
+		<UserControl Background="Transparent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="PreviewMouseDown">
+					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.AdminButtonPressCommand}" PassEventArgsToCommand="True" />
+				</i:EventTrigger>
+				<i:EventTrigger EventName="PreviewMouseUp">
+					<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.PreviewMouseUpCommand}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</UserControl>
+		
+	</Grid>
+
+</UserControl>

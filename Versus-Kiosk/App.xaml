@@ -1,0 +1,19 @@
+﻿<Application x:Class="VersusKiosk.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:ioc="clr-namespace:VersusKiosk.IoC"
+			 StartupUri="pack://application:,,,/Versus-Kiosk.UI;component/Main/MainWindow.xaml" >
+    <Application.Resources>
+
+		<ResourceDictionary>
+			
+			<ioc:NinjectServiceLocator x:Key="ServiceLocator" />
+			
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/Versus-Kiosk.UI;component/InterfaceResources.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/Versus-Kiosk.UI;component/Themes/Theme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+		
+	</Application.Resources>
+</Application>

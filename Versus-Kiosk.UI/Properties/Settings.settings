@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VersusKiosk.UI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Port" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10060</Value>
+    </Setting>
+    <Setting Name="AdminPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1234</Value>
+    </Setting>
+    <Setting Name="NetworkName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Mark</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
