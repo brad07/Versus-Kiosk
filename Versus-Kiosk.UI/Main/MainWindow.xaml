@@ -4,23 +4,22 @@
 		xmlns:cmd ="http://www.galasoft.ch/mvvmlight"
 		xmlns:page="clr-namespace:VersusKiosk.UI.Pages"
 		xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
-        Title="Versus Kiosk" Height="600" Width="800"
+        Title="Versus Kiosk"
 		xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 		x:Name="_this" TextOptions.TextFormattingMode="Display"
 		xmlns:dlgs="clr-namespace:MvvmDialogs.Behaviors;assembly=MvvmDialogs"
-		Background="{StaticResource Logo}"
+		Background="{StaticResource LogoBrush}"
 		BorderThickness="0" Margin="0" Padding="0"
 		FontFamily="/Versus-Kiosk.UI;component/#DIN Medium"
 		DataContext="{Binding Path=Main, Source={StaticResource ServiceLocator}}"
 		WindowStyle="None" WindowState="Maximized"
+		Width="1296" Height="710"
+		Focusable="True"
 		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}">
 
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
 			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.LoadedCommand}" />
-		</i:EventTrigger>
-		<i:EventTrigger EventName="Closing">
-			<cmd:EventToCommand Command="{Binding ClosingCommand}" PassEventArgsToCommand="True" />
 		</i:EventTrigger>
 		<i:EventTrigger EventName="Closed">
 			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ClosedCommand}" />
@@ -31,7 +30,7 @@
 		<KeyBinding Key="F4" Modifiers="Alt" Command="{Binding ExitCommand}" />
 	</Window.InputBindings>
 
-	<ItemsControl ItemsSource="{Binding Pages}" BorderThickness="0">
+	<ItemsControl x:Name="theItemsControl" ItemsSource="{Binding Pages}" BorderThickness="0" >
 		<ItemsControl.ItemsPanel>
 			<ItemsPanelTemplate>
 				<Grid />

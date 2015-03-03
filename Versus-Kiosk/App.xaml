@@ -10,8 +10,8 @@
 			<ioc:NinjectServiceLocator x:Key="ServiceLocator" />
 			
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/Versus-Kiosk.UI;component/InterfaceResources.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/Versus-Kiosk.UI;component/Themes/Theme.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/Versus-Kiosk.UI;component/InterfaceResources.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 		

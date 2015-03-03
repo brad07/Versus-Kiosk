@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 			 xmlns:domain="clr-namespace:VersusKiosk.Domain;assembly=Versus-Kiosk.Domain"
+			 xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
              mc:Ignorable="d" 
              x:Name="_this"
-             d:DesignHeight="1024" d:DesignWidth="1200">
+             d:DesignHeight="710" d:DesignWidth="1296" Loaded="OnLoaded">
 
 	<UserControl.Resources>
 
@@ -18,31 +20,43 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="4*"/>
-			<ColumnDefinition Width="4*"/>
-			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="2.5*"/>
+			<ColumnDefinition Width="2.5*"/>
+			<ColumnDefinition Width="2*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
+			<!-- 0: Caption -->
+			<RowDefinition Height="Auto" />
+			<!-- 1: Seperator -->
+			<RowDefinition Height="5*" />
+			<!-- 2: Panels 1 -->
+			<RowDefinition Height="Auto" />
+			<!-- 3: Panels 2 -->
+			<RowDefinition Height="Auto" />
+			<!-- 4: Players -->
+			<RowDefinition Height="Auto" />
+			<!-- 5: Seperator -->
 			<RowDefinition Height="1*" />
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="2*" />
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="0.2*" />
+			<!-- 6: Buttons-->
+			<RowDefinition Height="Auto" />
+			<!-- 7: Footer -->
+			<RowDefinition Height="80" />
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="Please select your workout:" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		<!-- Caption -->
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="Please select your workout:" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+		<!-- Panels -->
 		<TextBlock Grid.Row="1" Grid.Column="1" Text="Workout Type:" HorizontalAlignment="Right" VerticalAlignment="Top" />
-		<ListBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" x:Name="workoutList" ItemsSource="{Binding Workouts}" SelectedItem="{Binding CurrentWorkout, UpdateSourceTrigger=PropertyChanged}"
-				 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+		<ListBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" x:Name="workoutList" ItemsSource="{Binding Workouts}"
+				 SelectedIndex="{Binding CurrentWorkoutIndex, UpdateSourceTrigger=PropertyChanged}"
+				 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
 			<ListBox.Effect>
 				<DropShadowEffect />
 			</ListBox.Effect>
 		</ListBox>
-
 		<Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True" Background="White" CornerRadius="10">
 			<Border.Effect>
 				<DropShadowEffect />
@@ -57,25 +71,24 @@
 			</Grid>
 		</Border>
 
+		<!-- Players -->
 		<TextBlock Grid.Row="3" Grid.Column="1" Text="Players:" HorizontalAlignment="Right" VerticalAlignment="Center" />
-
 		<StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
-			<Button Command="{Binding LessCommand}" Padding="25,0,25,0" FontSize="{StaticResource HeaderFontSize}">
-				<TextBlock Text="-" FontSize="100" Margin="0,-25,0,-20" />
+			<Button Command="{Binding LessCommand}" Padding="25,0,25,0" FontSize="{StaticResource VersusHeaderFontSize}" >
+				<TextBlock Text="-" FontSize="75" Margin="0,-25,0,-20" />
 			</Button>
-			<TextBlock Text="{Binding NumPlayers}" Style="{StaticResource Header}" Padding="25,0,25,0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<Button Command="{Binding MoreCommand}" Padding="25,0,25,0" FontSize="{StaticResource HeaderFontSize}">
-				<TextBlock Text="+" FontSize="100" Margin="0,-25,0,-20" />
+			<TextBlock Text="{Binding NumPlayers}" Style="{StaticResource VersusHeader}" Padding="25,0,25,0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Button Command="{Binding MoreCommand}" Padding="25,0,25,0" FontSize="{StaticResource VersusHeaderFontSize}" >
+				<TextBlock Text="+" FontSize="75" Margin="0,-25,0,-20" />
 			</Button>
 		</StackPanel>
 
-		<TextBlock Grid.Row="4" />
-		
-		<StackPanel Grid.Row="5" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-			<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
+		<!-- Buttons -->
+		<StackPanel Grid.Row="6" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+			<Button Command="{Binding CancelCommand}" Width="200" Margin="0,0,54,0" IsCancel="True" >
 				<TextBlock Text="Cancel" Margin="20"/>
 			</Button>
-			<Button Command="{Binding NextCommand}" Width="200" Margin="100,0,100,0" IsDefault="True">
+			<Button Command="{Binding NextCommand}" Width="200" Margin="64,0,0,0" IsDefault="True" >
 				<TextBlock Text="Next" Margin="20"/>
 			</Button>
 		</StackPanel>

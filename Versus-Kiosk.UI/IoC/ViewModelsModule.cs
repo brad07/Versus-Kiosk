@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VersusKiosk.Domain.IoC;
+using VersusKiosk.UI.Hardware;
 using VersusKiosk.UI.Main;
 using VersusKiosk.UI.Pages;
 
@@ -23,12 +24,14 @@ namespace VersusKiosk.UI.IoC
 		{
 			Bind<Injector>().ToConstant(this.Injector);
 			Bind<MainViewModel>().ToSelf().InSingletonScope();
+			Bind<Scales>().ToSelf().InSingletonScope();
 			
 			// pages
 			Bind<IntroViewModel>().ToSelf();
 			Bind<AdminLoginViewModel>().ToSelf();
 			Bind<AdminViewModel>().ToSelf();
 			Bind<PlayerDetailsViewModel>().ToSelf();
+			Bind<NicknameViewModel>().ToSelf();
 			Bind<ChooseWorkoutViewModel>().ToSelf();
 			Bind<ScanViewModel>().ToSelf();
 			Bind<EnterEmailViewModel>().ToSelf();

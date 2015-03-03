@@ -24,5 +24,10 @@ namespace VersusKiosk.UI.Pages
 		{
 			InitializeComponent();
 		}
+
+		private void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			this.FirstNameBox.Focus();
+		}
 	}
 }

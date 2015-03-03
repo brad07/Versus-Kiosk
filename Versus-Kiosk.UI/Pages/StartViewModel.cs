@@ -72,6 +72,7 @@ namespace VersusKiosk.UI.Pages
 			// server has responded telling us a session is available
 			if (msg.cmd == "session_starting")
 			{
+				this.Session.session_no = msg.session_no;
 				for (int i = 0; i < this.Stations.Count(); i++)
 					this.Stations[i].StationName = msg.stations[i];
 				this.RequestingSessionStart = false;
@@ -87,6 +88,13 @@ namespace VersusKiosk.UI.Pages
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
 		private void OnOk()
 		{
+			this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
+		}
+
+		public ICommand SkipWarmUpCommand { get { return new RelayCommand(OnSkipWarmup); } }
+		private void OnSkipWarmup()
+		{
+			this.Parent.SkipWarmUp(this.Session);
 			this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
 		}
 		

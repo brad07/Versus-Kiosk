@@ -14,6 +14,8 @@ namespace VersusKiosk.Domain
 		[Inject]
 		public Injector Injector { get; set; }
 
+		public int session_no {get; set;}
+	
 		private Player[] _Players;
 		public Player[] Players
 		{

@@ -11,23 +11,21 @@
 		<ControlTemplate x:Key="RequestingTemplate" >
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="0.2*"/>
+					<!-- 0: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 1: Text 1 -->
+					<RowDefinition Height="Auto" />
+					<!-- 2: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 3: Button -->
+					<RowDefinition Height="Auto" />
+					<!-- 4: Footer -->
+					<RowDefinition Height="80" />
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="1" Text="" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="2" Text="Contacting server, please wait..." HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="3" Text="" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-					<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
-						<TextBlock Text="Cancel" Margin="20"/>
-					</Button>
-				</StackPanel>
+				<TextBlock Grid.Row="1" Text="Contacting server, please wait..." FontSize="{StaticResource HeaderFontSize}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<Button Grid.Row="3" Command="{Binding CancelCommand}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"  IsCancel="True">
+					<TextBlock Text="Cancel" Margin="20"/>
+				</Button>
 
 			</Grid>
 		</ControlTemplate>
@@ -35,17 +33,24 @@
 		<ControlTemplate x:Key="SinglePlayer" >
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="0.2*"/>
+					<!-- 0: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 1: Text 1 -->
+					<RowDefinition Height="Auto" />
+					<!-- 2: Text 2 -->
+					<RowDefinition Height="Auto" />
+					<!-- 3: Text 3 -->
+					<RowDefinition Height="Auto" />
+					<!-- 4: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 5: Button -->
+					<RowDefinition Height="Auto" />
+					<!-- 6: Footer -->
+					<RowDefinition Height="80" />
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="1" Text="{Binding Session.Players[0].FirstName, StringFormat='{}{0},'}" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="2" Text="you'll be starting" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="3" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" >
+				<TextBlock Grid.Row="1" Text="{Binding Session.Players[0].FirstName, StringFormat='{}{0},'}" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="2" Text="you'll be starting" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="3" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" >
 					<TextBlock.Text>
 						<MultiBinding StringFormat='{}on {0} in {1} seconds'>
 							<Binding Path="Stations[0].StationName" />
@@ -54,26 +59,47 @@
 					</TextBlock.Text>
 				</TextBlock>
 
-				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-					<Button Command="{Binding OkCommand}" Width="200" Margin="100,0,100,0">
+				<!--<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Command="{Binding OkCommand}" Width="200" IsDefault="True">
 						<TextBlock Text="Ok" Margin="20"/>
 					</Button>
+				</StackPanel>-->
+
+				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Command="{Binding SkipWarmUpCommand}" Width="300" IsDefault="True">
+						<TextBlock Text="Skip Warm Up" Margin="20"/>
+					</Button>
 				</StackPanel>
-				
+
 			</Grid>
 		</ControlTemplate>
 
 		<ControlTemplate x:Key="MultiplePlayers" >
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="2*"/>
-					<RowDefinition Height="5*"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="2*"/>
-					<RowDefinition Height="0.2*"/>
+
+					<!--  0: Seperator -->
+					<RowDefinition Height="40" />
+					<!--  1: Caption -->
+					<RowDefinition Height="Auto" />
+					<!--  2: Seperator -->
+					<RowDefinition Height="1*" />
+					<!--  3: Stations -->
+					<RowDefinition Height="Auto" />
+					<!--  4: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 5: Button -->
+					<RowDefinition Height="Auto" />
+					<!-- 6: Footer -->
+					<RowDefinition Height="80" />
+					
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" Text="{Binding SecondsRemaining, StringFormat='You will be starting in {0} seconds'}" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<ItemsControl Grid.Row="1" ItemsSource="{Binding Stations}" VerticalAlignment="Center">
+
+				<!--  1: Caption -->
+				<TextBlock Grid.Row="1" Text="{Binding SecondsRemaining, StringFormat='You will be starting in {0} seconds'}" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+				<!--  3: Stations -->
+				<ItemsControl Grid.Row="3" ItemsSource="{Binding Stations}" VerticalAlignment="Center">
 					<ItemsControl.ItemTemplate>
 						<ItemContainerTemplate>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -86,8 +112,9 @@
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 
-				<StackPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-					<Button Command="{Binding OkCommand}" Width="200" Margin="100,0,100,0">
+				<!-- 5: Button -->
+				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Command="{Binding OkCommand}" Width="200" IsDefault="True">
 						<TextBlock Text="Ok" Margin="20"/>
 					</Button>
 				</StackPanel>

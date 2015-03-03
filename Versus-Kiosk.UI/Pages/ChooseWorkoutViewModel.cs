@@ -19,16 +19,27 @@ namespace VersusKiosk.UI.Pages
 
 		private Workout[] _Workouts = new Workout[]
 		{
-			new Workout{Title = "Full Body", Name = "Arcade 1", Description = "An all-round routine that exercises all major muscle groups.", MediaFile = @".\Media\fullbody.wmv", StartTime=30},
-			new Workout{Title = "High Intensity", Name = "Arcade 1", Description = "A fast-paced, challenging routine that will get your heart rate going.", MediaFile = @".\Media\intensity.wmv", StartTime=30},
-			new Workout{Title = "Upper Body", Name = "Arcade 1", Description = "Specifically designed to build strength and overall upper-body fitness.", MediaFile = @".\Media\upperbody.wmv", StartTime=30},
-			new Workout{Title = "Strength", Name = "Arcade 1", Description = "A slower-paced routine that concentrates on building all-round strength.", MediaFile = @".\Media\strength.wmv", StartTime=30},
+			new Workout{Title = "Full Body", Name = "Arcade 1", Description = "An all-round routine that exercises all major muscle groups.", MediaFile = @".\Media\squats.wmv", StartTime=30},
+			new Workout{Title = "High Intensity", Name = "Arcade 2", Description = "A fast-paced, challenging routine that will get your heart rate going.", MediaFile = @".\Media\high_knees.wmv", StartTime=30},
+			new Workout{Title = "Strength", Name = "Arcade 3", Description = "A slower-paced routine that concentrates on building all-round strength.", MediaFile = @".\Media\shoulder_press.wmv", StartTime=30},
 		};
 
 		public Workout[] Workouts
 		{
 			get { return _Workouts; }
 			set { _Workouts = value; RaisePropertyChanged(() => this.Workouts); }
+		}
+
+		private int _CurrentWorkoutIndex = -1;
+		public int CurrentWorkoutIndex
+		{
+			get { return this._CurrentWorkoutIndex; }
+			set
+			{
+				this._CurrentWorkoutIndex = value;
+				RaisePropertyChanged(() => this.CurrentWorkoutIndex);
+				this.CurrentWorkout = this.Workouts[value];
+			}
 		}
 
 		public Workout CurrentWorkout
@@ -60,7 +71,8 @@ namespace VersusKiosk.UI.Pages
 		public override void Initialize()
 		{
 			base.Initialize();
-			this.Session.Workout = this.Workouts.FirstOrDefault();
+
+			this.CurrentWorkoutIndex = 0;
 		}
 
 		public ICommand NextCommand { get { return new RelayCommand(OnNext); } }

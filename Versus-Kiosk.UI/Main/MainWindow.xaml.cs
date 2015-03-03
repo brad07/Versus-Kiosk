@@ -22,18 +22,9 @@ namespace VersusKiosk.UI.Main
 	{
 		public MainWindow()
 		{
-			try
-			{
-				InitializeComponent();
-			}
-#pragma warning disable 0168
-			catch (Exception e)
-			{
-				Debug.WriteLine(e.Message);
-				throw e;
-			}
-#pragma warning restore 0168
+			InitializeComponent();
 		}
+
 		
 	}
 }

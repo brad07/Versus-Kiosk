@@ -18,6 +18,7 @@ namespace VersusKiosk.UI.Pages
 		private int PlayerNum;
 
 		public int DisplayPlayerNum { get { return this.PlayerNum + 1; } }
+		public int NumPlayers { get { return this.Session.Players.Count(); } }
 		public Player Player { get { return this.Session.Players[this.PlayerNum]; } }
 
 		private string _EmailError = "";
@@ -33,11 +34,24 @@ namespace VersusKiosk.UI.Pages
 			this.PlayerNum = playerNum;
 		}
 
+		public override void Initialize()
+		{
+			base.Initialize();
+		}
+
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
 		private void OnOk()
 		{
 			if (this.ValidateInput())
-				this.Parent.RequestPlayerDetails(this.Player);
+			{
+				// if these user has left the email field blank then they wish to remain anonymous, so ask for a nickname
+				if (String.IsNullOrEmpty(this.Player.Email))
+					this.Parent.SetPage(this.Injector.Get<NicknameViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", this.PlayerNum)));
+
+				// otherwise go through the signup/retrieval phase
+				else
+					this.Parent.RequestPlayerDetails(this.Player);
+			}
 		}
 
 		public override void ProcessNetworkMessage(dynamic msg)
@@ -53,19 +67,13 @@ namespace VersusKiosk.UI.Pages
 					this.Player.LastName = msg.member.last_name;
 					this.Player.Weight = msg.member.weight;
 
-					// if there are more players to get then move on to the next one
-					int nextPlayer = this.PlayerNum + 1;
-					if (nextPlayer < this.Session.Players.Count())
-						this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", nextPlayer)));
-
-					// otherwise start the session
-					else
-						this.Parent.SetPage(this.Injector.Get<StartViewModel>(new ConstructorArgument("session", this.Session)));
+					// get their latest weight
+					this.Parent.SetPage(this.Injector.Get<WeighInViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", this.PlayerNum)));
 				}
 				else
 				{
 					// user isn't in our database so ask them for their details
-					this.Parent.SetPage(this.Injector.Get<PlayerDetailsViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", this.PlayerNum)));
+					this.Parent.SetPage(this.Injector.Get<PlayerDetailsViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", this.PlayerNum)));					
 				}
 			}
 		}

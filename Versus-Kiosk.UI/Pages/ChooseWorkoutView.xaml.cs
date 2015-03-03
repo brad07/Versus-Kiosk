@@ -31,5 +31,11 @@ namespace VersusKiosk.UI.Pages
 			this.mediaPlayer.Position = TimeSpan.Zero;
 			this.mediaPlayer.Play();	// well this is pretty silly, isn't it....?
 		}
+
+		private void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			this.workoutList.Focus();
+		}
+
 	}
 }

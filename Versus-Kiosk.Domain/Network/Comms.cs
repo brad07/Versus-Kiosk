@@ -15,7 +15,6 @@ namespace VersusKiosk.Domain.Network
 	public class Comms
 	{
 		private ObservableCollection<QueuedMsg> outbound_msg_queue = new ObservableCollection<QueuedMsg>();
-		private static Comms instance;
 		private volatile bool _shouldStop;
 		private bool udp_listening;
 		private String network_name;		

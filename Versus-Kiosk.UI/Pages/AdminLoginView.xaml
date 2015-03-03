@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+			 xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
              mc:Ignorable="d" 
              x:Name="_this"
-             d:DesignHeight="1024" d:DesignWidth="1200"
-			 FocusManager.FocusedElement="{Binding ElementName=PasswordBox}">
+             d:DesignHeight="1024" d:DesignWidth="1200">
 
 	<Grid>
 		<Grid.RowDefinitions>
@@ -16,8 +17,11 @@
 			<RowDefinition Height="1*" />
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" Text="Please enter admin password:" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-		<TextBox Grid.Row="1" Name="PasswordBox" Text="{Binding Password}" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" TextAlignment="Center" />
+		<TextBlock Grid.Row="0" Text="Please enter admin password:" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		<PasswordBox Grid.Row="1" x:Name="PasswordBox" 
+					 behaviors:PasswordBoxAssistant.BindPassword="true"
+					 behaviors:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					 FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" />
 		<Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" >
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>

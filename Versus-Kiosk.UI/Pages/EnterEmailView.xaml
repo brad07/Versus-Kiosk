@@ -3,47 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+			 xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+	         mc:Ignorable="d" 
              x:Name="_this"
-			 FocusManager.FocusedElement="{Binding ElementName=EmailBox}"
-             d:DesignHeight="800" d:DesignWidth="960">
-	
+			 d:DesignHeight="710" d:DesignWidth="1296" Loaded="OnLoaded">
+
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*" />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="400" />
 			<ColumnDefinition Width="1*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
+			<!--  0: Seperator -->
+			<RowDefinition Height="40" />
+			<!--  1: Caption -->
+			<RowDefinition Height="Auto" />
+			<!--  2: Seperator -->
 			<RowDefinition Height="1*" />
+			<!--  3: Email -->
 			<RowDefinition Height="Auto" />
+			<!--  4: Error -->
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
+			<!--  5: Seperator -->
 			<RowDefinition Height="1*" />
-			<RowDefinition Height="0.2*" />
+			<!--  6: Text 1 -->
+			<RowDefinition Height="Auto" />
+			<!--  7: Text 2 -->
+			<RowDefinition Height="Auto" />
+			<!--  8: Text 3 -->
+			<RowDefinition Height="Auto" />
+			<!--  9: Seperator -->
+			<RowDefinition Height="1*" />
+			<!-- 10: Buttons -->
+			<RowDefinition Height="Auto" />
+			<!-- 11: Footer -->
+			<RowDefinition Height="80" />
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="4" Text="{Binding DisplayPlayerNum, StringFormat='Player {0} please enter your email address:'}" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-		<TextBlock Grid.Row="1" />
-		<TextBlock Grid.Row="2" Grid.Column="1" Text="Email:" HorizontalAlignment="Right" VerticalAlignment="Center" />
-		<TextBox Name="EmailBox" Grid.Row="2" Grid.Column="2" Text="{Binding Player.Email}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="False" />
-		<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding EmailError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
-		<TextBlock Grid.Row="5" Grid.Column="2" FontStyle="Italic"
-				   Text="* Your email address is used to send your workout results and identify you in future sessions. By leaving this field blank you will instead be given the chance to enter a name and will see your results at the end of the session for this workout only."
-				   TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
-		<TextBlock Grid.Row="6" />
+		<!-- Caption -->
+		<TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock.Style>
+				<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource VersusHeader}">
+					<Setter Property="Text" Value="{Binding DisplayPlayerNum, StringFormat='Player {0} please enter your email address:'}" />
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding NumPlayers}" Value="1">
+							<Setter Property="Text" Value="Please enter your email address:" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
 
-		<StackPanel Grid.Row="7" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-			<Button Command="{Binding CancelCommand}" Width="200" Margin="100,0,100,0" IsCancel="True">
+		<!-- Email -->
+		<TextBlock Grid.Row="3" Grid.Column="1" Text="Email:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+		<TextBox x:Name="EmailBox" Grid.Row="3" Grid.Column="2" Text="{Binding Player.Email, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" AcceptsReturn="False" />
+
+		<!-- Error -->
+		<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding EmailError}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic"/>
+
+		<!-- Text -->		
+		<TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" FontStyle="Italic" Text="Benefits of providing your email address:" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" />
+		<TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" FontStyle="Italic" Text="   - Track your personal best scores" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
+		<TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" FontStyle="Italic" Text="   - View your results online" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
+
+		<!-- Buttons -->
+		<StackPanel Grid.Row="10" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+			<Button Command="{Binding CancelCommand}" Width="200" Margin="0,0,54,0" IsCancel="True" >
 				<TextBlock Text="Cancel" Margin="20"/>
 			</Button>
-			<Button Command="{Binding OkCommand}" Width="200" Margin="100,0,100,0">
-				<TextBlock Text="Ok" Margin="20"/>
+			<Button Command="{Binding OkCommand}" Width="200" Margin="64,0,0,0" IsDefault="True" >
+				<TextBlock Margin="20">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+							<Setter Property="Text" Value="Ok" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding ElementName=EmailBox, Path=Text}" Value="">
+									<Setter Property="Text" Value="Skip" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
 			</Button>
 		</StackPanel>
 	</Grid>
+
 </UserControl>

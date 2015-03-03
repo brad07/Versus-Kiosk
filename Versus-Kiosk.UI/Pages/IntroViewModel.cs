@@ -62,17 +62,30 @@ namespace VersusKiosk.UI.Pages
 			}
 		}
 
-		public ICommand AdminButtonPressCommand { get { return new RelayCommand<MouseButtonEventArgs>(OnAdminButtonPress); } }
-		private void OnAdminButtonPress(MouseButtonEventArgs args)
+		public ICommand AdminButton_PreviewMouseDownCommand { get { return new RelayCommand<MouseButtonEventArgs>(OnAdminButton_PreviewMouseDown); } }
+		private void OnAdminButton_PreviewMouseDown(MouseButtonEventArgs args)
 		{
 			args.Handled = true;
-			StartAdminTimer();
+			//StartAdminTimer();
+			this.Parent.SetPage(this.Injector.Get<AdminLoginViewModel>());
 		}
 
-		public ICommand PreviewMouseUpCommand { get { return new RelayCommand(OnPreviewMouseUp); } }
-		private void OnPreviewMouseUp()
+		public ICommand AdminButton_PreviewMouseUpCommand { get { return new RelayCommand(OnAdminButton_PreviewMouseUp); } }
+		private void OnAdminButton_PreviewMouseUp()
 		{
 			StopAdminTimer();
+		}
+
+		public ICommand ResetButton_PreviewMouseDownCommand { get { return new RelayCommand<MouseButtonEventArgs>(OnResetButton_PreviewMouseDown); } }
+		private void OnResetButton_PreviewMouseDown(MouseButtonEventArgs args)
+		{
+			args.Handled = true;
+		}
+
+		public ICommand ResetButton_PreviewMouseUpCommand { get { return new RelayCommand(OnResetButton_PreviewMouseUpCommand); } }
+		private void OnResetButton_PreviewMouseUpCommand()
+		{
+			this.Parent.ResetAllStations();
 		}
 
 	}

@@ -55,9 +55,11 @@ namespace VersusKiosk.Domain.Network
 					if ((this.Client == null) && this.StayConnected)
 					{
 						this.Client = new WebSocket("ws://" + this.Address + ":81/");
+						this.Client.EnableAutoSendPing = true;
 						this.Client.NoDelay = true;
 						this.Client.Opened += OnOpened;
 						this.Client.Closed += OnClosed;
+						this.Client.Error += OnClosed;
 						this.Client.MessageReceived += OnMessage;
 						this.Client.Open();
 					}

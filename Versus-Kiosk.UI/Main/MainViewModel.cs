@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using VersusKiosk.Domain;
 using VersusKiosk.Domain.IoC;
 using VersusKiosk.Domain.Network;
+using VersusKiosk.UI.Hardware;
 using VersusKiosk.UI.Pages;
 
 namespace VersusKiosk.UI.Main
@@ -32,6 +33,9 @@ namespace VersusKiosk.UI.Main
 		[Inject]
 		public Comms Comms { get; set; }
 
+		[Inject]
+		public Scales Scales { get; set; }
+
 		private ObservableCollection<IDialogViewModel> _Dialogs = new ObservableCollection<IDialogViewModel>();
 		public ObservableCollection<IDialogViewModel> Dialogs { get { return _Dialogs; } }
 
@@ -41,12 +45,45 @@ namespace VersusKiosk.UI.Main
 			get { return _Pages; }
 			set { _Pages = value; RaisePropertyChanged(() => this.Pages); }
 		}
+		
+		/*
+		private PageViewModel _CurrentPage = null;
+		public PageViewModel CurrentPage
+		{
+			get { return _CurrentPage; }
+			set { _CurrentPage = value; RaisePropertyChanged(() => this.CurrentPage); }
+		}
+		 * */
 
 		private int _NumAvailableArcades = 0;
 		public int NumAvailableArcades
 		{
 			get { return _NumAvailableArcades; }
 			set { _NumAvailableArcades = value; RaisePropertyChanged(() => this.NumAvailableArcades); }
+		}
+
+		private DateTime _NextArcadeAvailable = DateTime.Now;
+		public DateTime NextArcadeAvailable
+		{
+			get { return _NextArcadeAvailable; }
+			set
+			{
+				_NextArcadeAvailable = value;
+				RaisePropertyChanged(() => this.NextArcadeAvailable);
+				if (!this.IsInDesignMode)
+					UpdateNextArcadeAvailable();
+			}
+		}
+
+		private string _NextArcadeAvailableString = "00:00";
+		public string NextArcadeAvailableString
+		{
+			get { return _NextArcadeAvailableString; }
+			set
+			{
+				_NextArcadeAvailableString = value;
+				RaisePropertyChanged(() => this.NextArcadeAvailableString);
+			}
 		}
 
 		private bool _Connected = false;
@@ -65,6 +102,9 @@ namespace VersusKiosk.UI.Main
 		
 		public void Initialize()
 		{
+			if (this.IsInDesignMode)
+				return;
+
 			LoadUserSettings();
 
 			this.Comms.BroadcastListener += ProcessNetworkBroadcast;
@@ -74,9 +114,17 @@ namespace VersusKiosk.UI.Main
 			this.Comms.startTCPSender();
 
 			SetPage(this.Injector.Get<IntroViewModel>());
-			//SetPage(this.Injector.Get<IntroViewModel>());
+
+			// testing/development
+			//var session = this.Injector.Get<Session>();
+			//session.SetNumPlayers(1);
 			//SetPage(this.Injector.Get<AdminLoginViewModel>());
 			//SetPage(this.Injector.Get<AdminViewModel>());
+			//SetPage(this.Injector.Get<ChooseWorkoutViewModel>());
+			//SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", session), new ConstructorArgument("playerNum", 0)));
+			//SetPage(this.Injector.Get<PlayerDetailsViewModel>());
+			//SetPage(this.Injector.Get<NicknameViewModel>(new ConstructorArgument("session", session), new ConstructorArgument("playerNum", 0)));
+			//SetPage(this.Injector.Get<WeighInViewModel>(new ConstructorArgument("session", session), new ConstructorArgument("playerNum", 0)));
 
 			requestAutoDiscovery();
 
@@ -90,6 +138,7 @@ namespace VersusKiosk.UI.Main
 		{
 			if (control_center_ip == null)
 				requestAutoDiscovery();
+			UpdateNextArcadeAvailable();
 		}
 
 		public void Dispose()
@@ -128,10 +177,14 @@ namespace VersusKiosk.UI.Main
 				var cmd = msg.cmd.ToString();
 
 				if (cmd == "available_arcades")
+				{
 					this.NumAvailableArcades = msg.num_available;
+					this.NextArcadeAvailable = DateTime.Now.AddSeconds((int)msg.next_available);
+				}
 
 				// don't know what this message is so pass it to the currently active page
 				else
+					//this.CurrentPage.ProcessNetworkMessage(msg);
 					this.Pages.Last().ProcessNetworkMessage(msg);
 			}));
 		}
@@ -236,23 +289,6 @@ namespace VersusKiosk.UI.Main
 		{
 		}
 
-		public ICommand ClosingCommand { get { return new RelayCommand<CancelEventArgs>(OnClosing); } }
-		private void OnClosing(CancelEventArgs args)
-		{
-			/*
-#if !DEBUG
-			var dlg = new MessageBoxViewModel
-			{
-				Caption = "Exit",
-				Message = "Save changes and quit?",
-				Buttons = System.Windows.MessageBoxButton.YesNo,
-				Image = System.Windows.MessageBoxImage.Question
-			};
-			args.Cancel = (dlg.Show(this.Dialogs) == System.Windows.MessageBoxResult.No);
-#endif
-			 * */
-		}
-
 		public ICommand ClosedCommand { get { return new RelayCommand(OnClosed); } }
 		private void OnClosed()
 		{
@@ -267,6 +303,16 @@ namespace VersusKiosk.UI.Main
 		{
 		}
 
+		/*
+		public void SetPage(PageViewModel page)
+		{
+			if (this.CurrentPage != null)
+				this.CurrentPage.Active = false;
+			this.CurrentPage = page;
+			page.Active = true;
+			}
+		 * */
+
 		public void SetPage(PageViewModel page)
 		{
 			foreach (var p in this.Pages)
@@ -274,6 +320,39 @@ namespace VersusKiosk.UI.Main
 			this.Pages.Clear();
 			this.Pages.Add(page);
 			page.Active = true;
+		}
+
+		/*
+		public void AddPage(PageViewModel page)
+		{
+			var oldPage = this.Pages.Last();
+			this.Pages.Add(page);
+			page.Active = true;
+		}
+		 * */
+
+		public void SkipWarmUp(Session session)
+		{
+			dynamic msg = new System.Dynamic.ExpandoObject();
+			msg.cmd = "skip_warmup";
+			msg.session_no = session.session_no;
+			msg.session = session;
+			if (control_center_ip != null)
+			{
+				Console.WriteLine("*** SKIPPING WARM UP ***");
+				this.Comms.sendMsg(msg, control_center_ip, true);
+			}
+		}
+
+		public void ResetAllStations()
+		{
+			dynamic msg = new System.Dynamic.ExpandoObject();
+			msg.cmd = "reset_all_stations";
+			if (control_center_ip != null)
+			{
+				Console.WriteLine("*** RESETTING ALL STATIONS ***");
+				this.Comms.sendMsg(msg, control_center_ip, true);
+			}
 		}
 
 		#region Sessions
@@ -332,6 +411,15 @@ namespace VersusKiosk.UI.Main
 			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
+		}
+
+		private void UpdateNextArcadeAvailable()
+		{
+			int seconds = (int)Math.Round((this.NextArcadeAvailable - DateTime.Now).TotalSeconds);
+			seconds = Math.Max(0, seconds);
+			int minutes = seconds / 60;
+			seconds %= 60;
+			this.NextArcadeAvailableString = minutes.ToString() + ":" + seconds.ToString("D2");
 		}
 
 	}

@@ -3854,7 +3854,7 @@
 	</Style>
 
 	<Style x:Key="Header" TargetType="{x:Type TextBlock}" BasedOn="{x:Null}">
-		<Setter Property="FontSize" Value="{StaticResource HeaderFontSize}" />
+		<Setter Property="FontSize" Value="{StaticResource VersusHeaderFontSize}" />
 		<Setter Property="Margin" Value="10" />
 	</Style>
 

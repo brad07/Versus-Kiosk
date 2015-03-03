@@ -37,9 +37,23 @@ namespace VersusKiosk.Domain
 			set { _Weight = value; RaisePropertyChanged(() => this.Weight); }
 		}
 
+		public string FullName
+		{
+			get
+			{
+				var name = this.FirstName;
+				if (!String.IsNullOrEmpty(this.LastName.Trim()))
+					name += " " + this.LastName[0];
+				return name;
+			}
+		}
+
 		public override string ToString()
 		{
-			return String.Join(" ", new string[] { this.FirstName, this.LastName }).Trim();
+			var result = String.Join(" ", new string[] { this.FirstName, this.LastName }).Trim();
+			if (String.IsNullOrEmpty(result))
+				result = "<Empty>";
+			return result;
 		}
 	}
 }

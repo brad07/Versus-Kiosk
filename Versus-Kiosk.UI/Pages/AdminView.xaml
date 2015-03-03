@@ -131,7 +131,7 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" Text="Administration Panel" Style="{StaticResource Header}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		<TextBlock Grid.Row="0" Text="Administration Panel" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 		<ItemsControl Grid.Row="1" ItemsSource="{Binding Stations}" ItemTemplate="{StaticResource StationTemplate}" HorizontalAlignment="Center">
 			<ItemsControl.ItemsPanel>

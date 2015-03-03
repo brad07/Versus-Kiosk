@@ -74,16 +74,25 @@ namespace VersusKiosk.UI.Pages
 
 		public virtual void Initialize()
 		{
-			
 		}
+
+		public delegate void ActivatingDelegate();
+		public event ActivatingDelegate Activating;
 
 		protected virtual void OnActivating()
 		{
+			if (this.Activating != null)
+				this.Activating();
 			this.Parent.PropertyChanged += Parent_PropertyChanged;
 		}
 
+		public delegate void DeactivagingDelegate();
+		public event DeactivagingDelegate Deactivating;
+
 		protected virtual void OnDeactivating()
 		{
+			if (this.Deactivating != null)
+				this.Deactivating();
 			this.Parent.PropertyChanged -= Parent_PropertyChanged;
 		}
 
