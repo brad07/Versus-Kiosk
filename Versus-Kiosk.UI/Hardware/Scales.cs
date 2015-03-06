@@ -47,6 +47,16 @@ namespace VersusKiosk.UI.Hardware
 			}
 		}
 
+		public void Disconnect()
+		{
+			if (this.Device != null)
+			{
+				if (this.Device.IsConnected)
+					this.Device.CloseDevice();
+				this.Device.Dispose();
+			}
+		}
+
 		public double Read()
 		{
 			try

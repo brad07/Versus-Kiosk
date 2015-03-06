@@ -62,7 +62,8 @@ namespace VersusKiosk.UI.Pages
 			{
 				var remaining = this.StartTime.AddSeconds(this.Session.Workout.StartTime) - DateTime.Now;
 				this.SecondsRemaining = (int)Math.Max(0, Math.Min(this.Session.Workout.StartTime, remaining.TotalSeconds));
-				if (remaining.TotalSeconds <= -5)
+				var elapsed_since_start = DateTime.Now - this.StartTime;
+				if (elapsed_since_start.TotalSeconds >= 15)
 					this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
 			}
 		}

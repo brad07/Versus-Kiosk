@@ -19,9 +19,9 @@ namespace VersusKiosk.UI.Pages
 
 		private Workout[] _Workouts = new Workout[]
 		{
-			new Workout{Title = "Full Body", Name = "Arcade 1", Description = "An all-round routine that exercises all major muscle groups.", MediaFile = @".\Media\squats.wmv", StartTime=30},
-			new Workout{Title = "High Intensity", Name = "Arcade 2", Description = "A fast-paced, challenging routine that will get your heart rate going.", MediaFile = @".\Media\high_knees.wmv", StartTime=30},
-			new Workout{Title = "Strength", Name = "Arcade 3", Description = "A slower-paced routine that concentrates on building all-round strength.", MediaFile = @".\Media\shoulder_press.wmv", StartTime=30},
+			new Workout{Title = "Full Body", Name = "Arcade 1", Description = "An all-round routine that exercises all major muscle groups.", MediaFile = @".\Media\squats.wmv", StartTime=15},
+			new Workout{Title = "High Intensity", Name = "Arcade 2", Description = "A fast-paced, challenging routine that will get your heart rate going.", MediaFile = @".\Media\high_knees.wmv", StartTime=15},
+			new Workout{Title = "Strength", Name = "Arcade 3", Description = "A slower-paced routine that concentrates on building all-round strength.", MediaFile = @".\Media\shoulder_press.wmv", StartTime=15},
 		};
 
 		public Workout[] Workouts

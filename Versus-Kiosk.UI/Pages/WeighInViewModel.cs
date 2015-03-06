@@ -75,6 +75,8 @@ namespace VersusKiosk.UI.Pages
 
 		protected override void OnDeactivating()
 		{
+			if (this.Scales.Connected)
+				this.Scales.Disconnect();
 			this.WeighTimer.Stop();
  			base.OnDeactivating();
 		}

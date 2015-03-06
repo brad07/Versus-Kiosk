@@ -355,6 +355,17 @@ namespace VersusKiosk.UI.Main
 			}
 		}
 
+		public void SkipAllWarmUps()
+		{
+			dynamic msg = new System.Dynamic.ExpandoObject();
+			msg.cmd = "skip_all_warmups";
+			if (control_center_ip != null)
+			{
+				Console.WriteLine("*** SKIPPING ALL WARMUPS ***");
+				this.Comms.sendMsg(msg, control_center_ip, true);
+			}
+		}
+
 		#region Sessions
 
 		public void RequestSessionAvailable(int numPlayers)

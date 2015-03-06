@@ -80,12 +80,19 @@ namespace VersusKiosk.UI.Pages
 		private void OnResetButton_PreviewMouseDown(MouseButtonEventArgs args)
 		{
 			args.Handled = true;
+			this.Parent.ResetAllStations();
 		}
 
 		public ICommand ResetButton_PreviewMouseUpCommand { get { return new RelayCommand(OnResetButton_PreviewMouseUpCommand); } }
 		private void OnResetButton_PreviewMouseUpCommand()
 		{
-			this.Parent.ResetAllStations();
+		}
+
+		public ICommand SkipWarmUpsButton_PreviewMouseDownCommand { get { return new RelayCommand<MouseButtonEventArgs>(OnSkipWarmUpsButton_PreviewMouseDown); } }
+		private void OnSkipWarmUpsButton_PreviewMouseDown(MouseButtonEventArgs args)
+		{
+			args.Handled = true;
+			this.Parent.SkipAllWarmUps();
 		}
 
 	}

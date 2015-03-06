@@ -103,9 +103,9 @@
 					<ItemsControl.ItemTemplate>
 						<ItemContainerTemplate>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-								<TextBlock Text="{Binding DisplayName}" Width="200"/>
-								<TextBlock Text="-" />
-								<TextBlock Text="{Binding StationName}" Width="200"/>
+								<TextBlock Text="{Binding DisplayName}" Style="{StaticResource VersusHeader}" />
+								<TextBlock Text="-" Style="{StaticResource VersusHeader}" />
+								<TextBlock Text="{Binding StationName}" Style="{StaticResource VersusHeader}" />
 							</StackPanel>
 							
 						</ItemContainerTemplate>
@@ -113,9 +113,14 @@
 				</ItemsControl>
 
 				<!-- 5: Button -->
-				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+				<!--<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
 					<Button Command="{Binding OkCommand}" Width="200" IsDefault="True">
 						<TextBlock Text="Ok" Margin="20"/>
+					</Button>
+				</StackPanel>-->
+				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Command="{Binding SkipWarmUpCommand}" Width="200" IsDefault="True">
+						<TextBlock Text="Skip Warm Up" Margin="20"/>
 					</Button>
 				</StackPanel>
 				

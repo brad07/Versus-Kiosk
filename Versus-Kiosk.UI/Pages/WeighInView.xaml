@@ -6,13 +6,14 @@
 			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 			 xmlns:local="clr-namespace:VersusKiosk.UI.Pages"
 			 xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
+			 xmlns:converters="clr-namespace:VersusKiosk.UI.Converters"
              mc:Ignorable="d" 
 			 x:Name="_this"			 
              d:DesignHeight="800" d:DesignWidth="960" Loaded="OnLoaded">
 
 	<UserControl.Resources>
 
-		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<converters:BooleanToHiddenConverter x:Key="BooleanToHiddenConverter" />
 
 		<ControlTemplate x:Key="ManualTemplate">
 
@@ -180,7 +181,7 @@
 					</TextBlock.Style>
 				</TextBlock>
 
-				<Image Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200" Visibility="{Binding ValidWeight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+				<Image Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200" Visibility="{Binding ValidWeight, Converter={StaticResource BooleanToHiddenConverter}}" />
 
 			</Grid>
 		</ControlTemplate>

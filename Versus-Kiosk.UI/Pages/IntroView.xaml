@@ -40,7 +40,7 @@
 							<Setter Property="Text" Value="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades, StringFormat='{}{0} Stations Available'}" />
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="0">
-									<Setter Property="Text" Value="Sorry, all stations in use." />
+									<Setter Property="Text" Value="Sorry, all stations are in use." />
 								</DataTrigger>
 								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="1">
 									<Setter Property="Text" Value="1 Station Available" />
@@ -118,6 +118,14 @@
 				<!--<i:EventTrigger EventName="PreviewMouseUp">
 					<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ResetButton_PreviewMouseUpCommand}" />
 				</i:EventTrigger>-->
+			</i:Interaction.Triggers>
+		</UserControl>
+
+		<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="PreviewMouseDown">
+					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.SkipWarmUpsButton_PreviewMouseDownCommand}" PassEventArgsToCommand="True" />
+				</i:EventTrigger>
 			</i:Interaction.Triggers>
 		</UserControl>
 
