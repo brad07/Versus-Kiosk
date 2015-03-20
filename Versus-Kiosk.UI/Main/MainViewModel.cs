@@ -93,10 +93,20 @@ namespace VersusKiosk.UI.Main
 			set { _Connected = value; RaisePropertyChanged(() => this.Connected); }
 		}
 
-		private IPAddress control_center_ip;
+		private IPAddress _control_center_ip = null;
+		private IPAddress control_center_ip
+		{
+			get {return this._control_center_ip;}
+			set
+			{
+				this._control_center_ip = value;
+			}
+		}
+
 		private DateTime last_connect_attempt = DateTime.Now.AddDays(-1);
 		private int connect_retry_delay = 1;
 		private DateTime last_autodiscovery_request = DateTime.Now.AddDays(-1);
+		private DateTime LastServerMessage = DateTime.Now;
 
 		private DispatcherTimer UpdateTimer;
 		
@@ -107,11 +117,14 @@ namespace VersusKiosk.UI.Main
 
 			LoadUserSettings();
 
+			this.Comms.StationClient.OnConnectedToServer += StationClient_OnConnectedToServer;
+			this.Comms.StationClient.OnDisconnectedFromServer += StationClient_OnDisconnectedFromServer;
 			this.Comms.BroadcastListener += ProcessNetworkBroadcast;
 			this.Comms.MessageListener += ProcessNetworkMessage;
 			var networkName = Environment.GetEnvironmentVariable("VERSUS_NETWORK", EnvironmentVariableTarget.User) ?? Properties.Settings.Default.NetworkName;
 			this.Comms.startUDPListener(networkName); // todo: replace this
 			this.Comms.startTCPSender();
+
 
 			SetPage(this.Injector.Get<IntroViewModel>());
 
@@ -136,6 +149,17 @@ namespace VersusKiosk.UI.Main
 
 		void UpdateTimer_Tick(object sender, EventArgs e)
 		{
+			// if we haven't heard from the server for a while then break the connection
+			if (this.Connected)
+			{
+				var elapsed = DateTime.Now - this.LastServerMessage;
+				if (elapsed.TotalSeconds > 10)
+				{
+					this.Comms.disconnect();
+					this.control_center_ip = null;
+				}
+			}
+
 			if (control_center_ip == null)
 				requestAutoDiscovery();
 			UpdateNextArcadeAvailable();
@@ -174,12 +198,14 @@ namespace VersusKiosk.UI.Main
 		{
 			Application.Current.Dispatcher.Invoke(new Action(() => {
 
+				this.LastServerMessage = DateTime.Now;
 				var cmd = msg.cmd.ToString();
 
-				if (cmd == "available_arcades")
+				if (cmd == "kiosk_update")
 				{
 					this.NumAvailableArcades = msg.num_available;
-					this.NextArcadeAvailable = DateTime.Now.AddSeconds((int)msg.next_available);
+					var now = DateTime.Now;
+					this.NextArcadeAvailable = now.AddSeconds((int)msg.next_available);
 				}
 
 				// don't know what this message is so pass it to the currently active page
@@ -205,9 +231,7 @@ namespace VersusKiosk.UI.Main
 							return;
 
 						try
-						{
-							this.Comms.StationClient.OnConnectedToServer += StationClient_OnConnectedToServer;
-							this.Comms.StationClient.OnDisconnectedFromServer += StationClient_OnDisconnectedFromServer;
+						{							
 							this.Comms.startStationClient(control_center_ip);
 						}
 						catch (Exception)
@@ -235,6 +259,8 @@ namespace VersusKiosk.UI.Main
 
 		void StationClient_OnConnectedToServer(object context)
 		{
+			this.LastServerMessage = DateTime.Now;
+
 			Application.Current.Dispatcher.Invoke(new Action(() =>
 			{
 				this.Connected = true;

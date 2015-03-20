@@ -17,7 +17,6 @@ namespace VersusKiosk.Domain.Network
 		private WebSocket Client;
 		private string Address;
 		private volatile bool Connected = false;
-		private volatile bool StayConnected = true;
 
 		public delegate void ServerMessageReceiveHandler(string message);
 		public event ServerMessageReceiveHandler OnMessageReceived;
@@ -52,17 +51,23 @@ namespace VersusKiosk.Domain.Network
 				mutex.WaitOne();
 				try
 				{
-					if ((this.Client == null) && this.StayConnected)
+					if (this.Client != null)
 					{
-						this.Client = new WebSocket("ws://" + this.Address + ":81/");
-						this.Client.EnableAutoSendPing = true;
-						this.Client.NoDelay = true;
-						this.Client.Opened += OnOpened;
-						this.Client.Closed += OnClosed;
-						this.Client.Error += OnClosed;
-						this.Client.MessageReceived += OnMessage;
-						this.Client.Open();
+						this.Client.Opened -= OnOpened;
+						this.Client.Closed -= OnClosed;
+						this.Client.Error -= OnClosed;
+						this.Client.MessageReceived -= OnMessage;
+						this.Client.Dispose();
 					}
+
+					this.Client = new WebSocket("ws://" + this.Address + ":81/");
+					this.Client.EnableAutoSendPing = true;
+					this.Client.NoDelay = true;
+					this.Client.Opened += OnOpened;
+					this.Client.Closed += OnClosed;
+					this.Client.Error += OnClosed;
+					this.Client.MessageReceived += OnMessage;
+					this.Client.Open();
 				}
 				catch
 				{
@@ -76,7 +81,6 @@ namespace VersusKiosk.Domain.Network
 			mutex.WaitOne();
 			try
 			{
-				this.StayConnected = false;
 				if (this.Client != null)
 					this.Client.Close();
 			}
@@ -121,7 +125,7 @@ namespace VersusKiosk.Domain.Network
 			if (this.OnDisconnectedFromServer != null)
 				this.OnDisconnectedFromServer(sender);
 			Thread.Sleep(1000);
-			ConnectToServer();
+			//ConnectToServer();
 		}
 
 		private void OnMessage(object sender, MessageReceivedEventArgs args)

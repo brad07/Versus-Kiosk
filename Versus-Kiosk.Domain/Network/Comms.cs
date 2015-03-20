@@ -31,6 +31,7 @@ namespace VersusKiosk.Domain.Network
 		public Comms()
 		{
 			this.StationClient = new StationClient();
+			this.StationClient.OnMessageReceived += StationClient_OnMessageReceived;
 		}
 
 		// Thread signal.
@@ -51,7 +52,6 @@ namespace VersusKiosk.Domain.Network
 				this.Listener.Close();
 			if (this.StationClient != null)
 				this.StationClient.Dispose();
-
 		}
 
 		private static int udpThreads = 0;
@@ -271,8 +271,7 @@ namespace VersusKiosk.Domain.Network
 		}
 
 		public void startStationClient(IPAddress address)
-		{
-			this.StationClient.OnMessageReceived += StationClient_OnMessageReceived;
+		{			
 			this.StationClient.Start(address);
 		}
 
