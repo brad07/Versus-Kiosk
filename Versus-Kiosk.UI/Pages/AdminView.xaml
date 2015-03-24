@@ -45,7 +45,7 @@
 							<DataTrigger Binding="{Binding disable_scoring}" Value="True">
 								<Setter Property="Background" Value="Black" />
 							</DataTrigger>
-							<DataTrigger Binding="{Binding status}" Value="Not Connected">
+							<DataTrigger Binding="{Binding connected}" Value="False">
 								<Setter Property="Background" Value="Red" />
 							</DataTrigger>
 							<DataTrigger Binding="{Binding disabled}" Value="True">

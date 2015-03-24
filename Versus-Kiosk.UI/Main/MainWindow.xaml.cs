@@ -25,6 +25,13 @@ namespace VersusKiosk.UI.Main
 			InitializeComponent();
 		}
 
+		private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+#if !DEBUG
+			e.Cancel = true;
+#endif
+		}
+
 		
 	}
 }

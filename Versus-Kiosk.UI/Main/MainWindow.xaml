@@ -15,7 +15,8 @@
 		WindowStyle="None" WindowState="Maximized"
 		Width="1296" Height="710"
 		Focusable="True"
-		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}">
+		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}"
+		Closing="OnClosing">
 
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -236,6 +237,7 @@ namespace VersusKiosk.Domain.Network
 
 		void StationClient_OnMessageReceived(string message)
 		{
+
 			// deserialize the data into a dynamic object
 			//JavaScriptSerializer serializer = new JavaScriptSerializer();
 			//serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
@@ -507,6 +509,7 @@ namespace VersusKiosk.Domain.Network
 					json = JsonConvert.SerializeObject(msg, Formatting.Indented);
 				else
 					json = msg;
+
 				if (this.StationClient != null)
 					this.StationClient.Send(json);
 				return "";

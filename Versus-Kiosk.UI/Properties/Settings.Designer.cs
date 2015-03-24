@@ -34,7 +34,7 @@ namespace VersusKiosk.UI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1234")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1128")]
         public string AdminPassword {
             get {
                 return ((string)(this["AdminPassword"]));
@@ -43,7 +43,7 @@ namespace VersusKiosk.UI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mark")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Genesis")]
         public string NetworkName {
             get {
                 return ((string)(this["NetworkName"]));
