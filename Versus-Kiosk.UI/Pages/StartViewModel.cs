@@ -111,7 +111,7 @@ namespace VersusKiosk.UI.Pages
 			get
 			{
 				var str = this.Player.FirstName;
-				if (!String.IsNullOrEmpty(this.Player.LastName))
+				if (!String.IsNullOrEmpty(this.Player.LastName.Trim()))
 					str += " " + this.Player.LastName[0] + ".";
 				return str;
 			}

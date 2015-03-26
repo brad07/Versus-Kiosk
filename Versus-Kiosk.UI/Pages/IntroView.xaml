@@ -110,24 +110,21 @@
 			</i:Interaction.Triggers>
 		</UserControl>
 
-		<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Bottom" Width="100">
+		<!--<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Bottom" Width="100">
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="PreviewMouseDown">
 					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.ResetButton_PreviewMouseDownCommand}" PassEventArgsToCommand="True" />
 				</i:EventTrigger>
-				<!--<i:EventTrigger EventName="PreviewMouseUp">
-					<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ResetButton_PreviewMouseUpCommand}" />
-				</i:EventTrigger>-->
 			</i:Interaction.Triggers>
-		</UserControl>
+		</UserControl>-->
 
-		<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100">
+		<!--<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100">
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="PreviewMouseDown">
 					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.SkipWarmUpsButton_PreviewMouseDownCommand}" PassEventArgsToCommand="True" />
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
-		</UserControl>
+		</UserControl>-->
 
 	</Grid>
 

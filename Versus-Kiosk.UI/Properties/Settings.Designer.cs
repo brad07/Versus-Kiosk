@@ -34,7 +34,7 @@ namespace VersusKiosk.UI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1128")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2580")]
         public string AdminPassword {
             get {
                 return ((string)(this["AdminPassword"]));

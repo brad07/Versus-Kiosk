@@ -66,8 +66,8 @@ namespace VersusKiosk.UI.Pages
 		private void OnAdminButton_PreviewMouseDown(MouseButtonEventArgs args)
 		{
 			args.Handled = true;
-			//StartAdminTimer();
-			this.Parent.SetPage(this.Injector.Get<AdminLoginViewModel>());
+			StartAdminTimer();
+			//this.Parent.SetPage(this.Injector.Get<AdminLoginViewModel>());
 		}
 
 		public ICommand AdminButton_PreviewMouseUpCommand { get { return new RelayCommand(OnAdminButton_PreviewMouseUp); } }

@@ -6,10 +6,10 @@
       <Value Profile="(Default)">10060</Value>
     </Setting>
     <Setting Name="AdminPassword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1128</Value>
+      <Value Profile="(Default)">2580</Value>
     </Setting>
     <Setting Name="NetworkName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Main</Value>
+      <Value Profile="(Default)">Genesis</Value>
     </Setting>
   </Settings>
 </SettingsFile>
