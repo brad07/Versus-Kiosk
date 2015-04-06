@@ -15,12 +15,14 @@
 		WindowStyle="None" WindowState="Maximized"
 		Width="1296" Height="710"
 		Focusable="True"
-		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}"
-		Closing="OnClosing">
+		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}">
 
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
 			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.LoadedCommand}" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closing">
+			<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.ClosingCommand}" PassEventArgsToCommand="True" />
 		</i:EventTrigger>
 		<i:EventTrigger EventName="Closed">
 			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ClosedCommand}" />

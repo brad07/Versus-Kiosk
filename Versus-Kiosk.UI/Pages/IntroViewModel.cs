@@ -28,12 +28,12 @@ namespace VersusKiosk.UI.Pages
 			// override this method so we don't keep trying to restart ourselves
 		}
 
-		public ICommand ScanCommand { get { return new RelayCommand(OnScan); } }
-		private void OnScan()
+		public ICommand SelectBodyAreaCommand { get { return new RelayCommand<BodyArea>(OnSelectBodyArea); } }
+		private void OnSelectBodyArea(BodyArea area)
 		{
 			if (this.Parent.NumAvailableArcades > 0)
 			{
-				var session = this.Injector.Get<Session>();
+				var session = this.Injector.Get<Session>(new PropertyValue("BodyArea", area));
 				this.Parent.SetPage(this.Injector.Get<ChooseWorkoutViewModel>(new ConstructorArgument("session", session)));
 			}
 		}

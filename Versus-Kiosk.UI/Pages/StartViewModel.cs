@@ -60,8 +60,8 @@ namespace VersusKiosk.UI.Pages
 		{
 			if (!this.RequestingSessionStart)
 			{
-				var remaining = this.StartTime.AddSeconds(this.Session.Workout.StartTime) - DateTime.Now;
-				this.SecondsRemaining = (int)Math.Max(0, Math.Min(this.Session.Workout.StartTime, remaining.TotalSeconds));
+				var remaining = this.StartTime.AddSeconds(this.Session.WorkoutType.StartTime) - DateTime.Now;
+				this.SecondsRemaining = (int)Math.Max(0, Math.Min(this.Session.WorkoutType.StartTime, remaining.TotalSeconds));
 				var elapsed_since_start = DateTime.Now - this.StartTime;
 				if (elapsed_since_start.TotalSeconds >= 15)
 					this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
@@ -78,7 +78,7 @@ namespace VersusKiosk.UI.Pages
 					this.Stations[i].StationName = msg.stations[i];
 				this.RequestingSessionStart = false;
 				this.StartTime = DateTime.Now;
-				this.SecondsRemaining = this.Session.Workout.StartTime;
+				this.SecondsRemaining = this.Session.WorkoutType.StartTime;
 			}
 			else if (msg.cmd == "session_cancelled")
 				this.Parent.SetPage(this.Injector.Get<IntroViewModel>()); // todo: notify the user - MJF

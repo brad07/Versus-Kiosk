@@ -12,6 +12,8 @@ using VersusKiosk.UI.ViewModels;
 using VersusKiosk.UI.Helpers;
 using Newtonsoft.Json;
 using Ninject.Parameters;
+using MvvmDialogs.ViewModels;
+using System.Windows;
 
 namespace VersusKiosk.UI.Pages
 {
@@ -59,15 +61,75 @@ namespace VersusKiosk.UI.Pages
 		{
 		}
 
+		public ICommand LogOutCommand { get { return new RelayCommand(OnLogOut); } }
+		private void OnLogOut()
+		{
+			var result = new MessageBoxViewModel
+			{
+				Caption = "Quit?",
+				Message = "Exit Versus Kiosk?",
+				Image = MessageBoxImage.Question,
+				Buttons = MessageBoxButton.YesNo
+			}.Show(this.Parent.Dialogs);
+
+			if (result == MessageBoxResult.Yes)
+				this.Parent.ShutDown();
+		}
+
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
 		private void OnOk()
 		{
 			this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
 		}
 
+		public ICommand PowerOnCommand { get { return new RelayCommand(OnPowerOn); } }
+		private void OnPowerOn()
+		{
+			var result = new MessageBoxViewModel
+			{
+				Caption = "Power On?",
+				Message = "Power on all versus stations?",
+				Image = MessageBoxImage.Question,
+				Buttons = MessageBoxButton.YesNo
+			}.Show(this.Parent.Dialogs);
+
+			if (result == MessageBoxResult.Yes)
+				this.Parent.SendStationCommand("power_on");
+		}
+
+		public ICommand PowerOffCommand { get { return new RelayCommand(OnPowerOff); } }
+		private void OnPowerOff()
+		{
+			var result = new MessageBoxViewModel
+			{
+				Caption = "Power Off?",
+				Message = "Power off all versus stations?",
+				Image = MessageBoxImage.Question,
+				Buttons = MessageBoxButton.YesNo
+			}.Show(this.Parent.Dialogs);
+
+			if (result == MessageBoxResult.Yes)
+				this.Parent.SendStationCommand("power_off");
+		}
+
+		public ICommand StopAllCommand { get { return new RelayCommand(OnStopAll); } }
+		private void OnStopAll()
+		{
+			var result = new MessageBoxViewModel
+			{
+				Caption = "Stop All?",
+				Message = "Stop all workouts on versus stations?",
+				Image = MessageBoxImage.Question,
+				Buttons = MessageBoxButton.YesNo
+			}.Show(this.Parent.Dialogs);
+
+			if (result == MessageBoxResult.Yes)
+				this.Parent.SendStationCommand("stop_all");
+		}
+
 		public override void ProcessNetworkMessage(dynamic msg)
 		{
-			if (msg.cmd == "arcade_stations")
+			if (msg.cmd == "arcade_state")
 				this.Stations = JsonConvert.DeserializeObject<List<StationViewModel>>(msg.stations.ToString());
 		}
 

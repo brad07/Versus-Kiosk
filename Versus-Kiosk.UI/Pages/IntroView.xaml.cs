@@ -25,12 +25,21 @@ namespace VersusKiosk.UI.Pages
 			InitializeComponent();
 		}
 
-		private void OnMediaEnded(object sender, RoutedEventArgs e)
+		private void mediaPlayer_Initialized(object sender, EventArgs e)
+		{
+			// TODO: ARGH!!! MVVM pattern is broken, move this to the view model! - MJF
+			var media = sender as MediaElement;
+			media.Play();
+		}
+		
+		private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
 		{
 			// TODO: ARGH!!! MVVM pattern is broken, move this to the view model! - MJF
 			var media = sender as MediaElement;
 			media.Position = TimeSpan.Zero;
 			media.LoadedBehavior = MediaState.Play;
 		}
+
+		
 	}
 }

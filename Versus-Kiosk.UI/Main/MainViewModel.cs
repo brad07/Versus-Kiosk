@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MvvmDialogs.ViewModels;
+using Newtonsoft.Json;
 using Ninject;
 using Ninject.Parameters;
 using System;
@@ -27,6 +28,8 @@ namespace VersusKiosk.UI.Main
 {
 	public class MainViewModel : ViewModelBase, IInitializable, IDisposable
 	{
+		public bool ShuttingDown = false;
+
 		[Inject]
 		public Injector Injector { get; set; }
 
@@ -36,8 +39,8 @@ namespace VersusKiosk.UI.Main
 		[Inject]
 		public Scales Scales { get; set; }
 
-		private ObservableCollection<IDialogViewModel> _Dialogs = new ObservableCollection<IDialogViewModel>();
-		public ObservableCollection<IDialogViewModel> Dialogs { get { return _Dialogs; } }
+		private DialogViewModelCollection _Dialogs = new DialogViewModelCollection();
+		public DialogViewModelCollection Dialogs { get { return _Dialogs; } }
 
 		private ObservableCollection<PageViewModel> _Pages = new ObservableCollection<PageViewModel>();
 		public ObservableCollection<PageViewModel> Pages
@@ -101,6 +104,13 @@ namespace VersusKiosk.UI.Main
 			{
 				this._control_center_ip = value;
 			}
+		}
+
+		private IList<Workout> _Workouts = new List<Workout>();
+		public IList<Workout> Workouts
+		{
+			get { return this._Workouts; }
+			set { this._Workouts = value; RaisePropertyChanged(() => this.Workouts); }
 		}
 
 		private DateTime last_connect_attempt = DateTime.Now.AddDays(-1);
@@ -206,6 +216,17 @@ namespace VersusKiosk.UI.Main
 					this.NumAvailableArcades = msg.num_available;
 					var now = DateTime.Now;
 					this.NextArcadeAvailable = now.AddSeconds((int)msg.next_available);
+				}
+
+				else if (cmd == "set_workouts")
+				{
+					try
+					{
+						this.Workouts = JsonConvert.DeserializeObject<List<Workout>>(msg.workouts.ToString());
+					}
+					catch
+					{
+					}
 				}
 
 				// don't know what this message is so pass it to the currently active page
@@ -440,7 +461,7 @@ namespace VersusKiosk.UI.Main
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
 
-		public void SendStationCommand(string command, int station_no)
+		public void SendStationCommand(string command, int station_no=0)
 		{
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = command;
@@ -457,6 +478,22 @@ namespace VersusKiosk.UI.Main
 			int minutes = seconds / 60;
 			seconds %= 60;
 			this.NextArcadeAvailableString = minutes.ToString() + ":" + seconds.ToString("D2");
+		}
+
+		public void ShutDown()
+		{
+			this.ShuttingDown = true;
+			Application.Current.MainWindow.Close();	// todo: this breaks mvvm, replace with an event
+		}
+
+		public ICommand ClosingCommand { get { return new RelayCommand<CancelEventArgs>(OnClosing); } }
+		private void OnClosing(CancelEventArgs e)
+		{
+			if (this.ShuttingDown)
+				return;
+#if !DEBUG
+			e.Cancel = true;
+#endif
 		}
 
 	}

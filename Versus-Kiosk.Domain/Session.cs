@@ -23,15 +23,25 @@ namespace VersusKiosk.Domain
 			set { _Players = value; RaisePropertyChanged(() => this.Players); }
 		}
 
-		private Workout _Workout;
-		public Workout Workout
+		private BodyArea _BodyArea = BodyArea.FullBody;
+		public BodyArea BodyArea
+		{
+			get { return _BodyArea; }
+			set { _BodyArea = value; RaisePropertyChanged(() => this.BodyArea); }
+		}
+
+		private WorkoutType _WorkoutType;
+		public WorkoutType WorkoutType
+		{
+			get { return _WorkoutType; }
+			set { _WorkoutType = value; RaisePropertyChanged(() => this.WorkoutType); }
+		}
+
+		private string _Workout;
+		public string Workout
 		{
 			get { return _Workout; }
 			set { _Workout = value; RaisePropertyChanged(() => this.Workout); }
-		}
-
-		public Session()
-		{
 		}
 
 		public void SetNumPlayers(int numPlayers)
@@ -39,21 +49,6 @@ namespace VersusKiosk.Domain
 			this.Players = Enumerable.Range(1, numPlayers)
 				.Select(playerNum => this.Injector.Get<Player>())
 				.ToArray();
-
-			/*
-			this.Players = new Player[numPlayers];
-			for (int i = 0; i < numPlayers; i++)
-			{
-				this.Players[i] = this.Injector.Get<Player>();
-				switch (i)
-				{
-					case 0: this.Players[i].FirstName = "Matthew"; this.Players[i].LastName = "Michaelson"; break;
-					case 1: this.Players[i].FirstName = "Mark"; this.Players[i].LastName = "Markson"; break;
-					case 2: this.Players[i].FirstName = "Luke"; this.Players[i].LastName = "Lukeson"; break;
-					case 3: this.Players[i].FirstName = "John"; this.Players[i].LastName = "Johnson"; break;
-				}
-			}
-			 * */
 		}
 
 

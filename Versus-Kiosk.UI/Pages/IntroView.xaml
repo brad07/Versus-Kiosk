@@ -5,54 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 			 xmlns:cmd ="http://www.galasoft.ch/mvvmlight"
+			 xmlns:domain="clr-namespace:VersusKiosk.Domain;assembly=Versus-Kiosk.Domain"
              mc:Ignorable="d"
 			 x:Name="_this"
              d:DesignHeight="1024" d:DesignWidth="1200">
 
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="PreviewKeyDown">
-			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
-		</i:EventTrigger>
-		<i:EventTrigger EventName="KeyDown">
-			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
-		</i:EventTrigger>
-		<i:EventTrigger EventName="MouseDown">
-			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ScanCommand}" />
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-
 	<UserControl.Resources>
+
+		<Style x:Key="WorkoutButton" TargetType="{x:Type Button}">
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect ShadowDepth="4"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border Margin="20" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True" Background="White" CornerRadius="10">
+							<ContentPresenter />
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Effect" Value="{x:Null}" />
+					<Setter Property="RenderTransform">
+						<Setter.Value>
+							<TranslateTransform X="4" Y="4" />
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 
 		<DataTemplate x:Key="connectedTemplate">
 			<Grid Background="White">
 				<Grid.RowDefinitions>
 					<RowDefinition />
 					<RowDefinition Height="Auto"/>
-					<RowDefinition />
+					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="1" HorizontalAlignment="Center">
+				<TextBlock Grid.Row="1" HorizontalAlignment="Center" FontSize="{StaticResource HugeFont}">
 					<TextBlock.Style>
 						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource VersusHeader}">
-							<Setter Property="Text" Value="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades, StringFormat='{}{0} Stations Available'}" />
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="0">
-									<Setter Property="Text" Value="Sorry, all stations are in use." />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="1">
-									<Setter Property="Text" Value="1 Station Available" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</TextBlock.Style>
-				</TextBlock>
-				<TextBlock Grid.Row="3" HorizontalAlignment="Center" FontSize="{StaticResource HugeFont}">
-					<TextBlock.Style>
-						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource VersusHeader}">
-							<Setter Property="Text" Value="Touch Screen To Begin" />
+							<Setter Property="Text" Value="Select Workout Type" />
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="0">
 									<Setter Property="Text" Value="{Binding ElementName=_this, Path=DataContext.Parent.NextArcadeAvailableString, StringFormat='Next Station Available in {0}'}" />
@@ -70,6 +71,62 @@
 						</Style>
 					</TextBlock.Style>
 				</TextBlock>
+				
+				<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.FullBody}">
+						<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="1*"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<MediaElement Source=".\Media\squat_and_press.wmv" LoadedBehavior="Manual" Stretch="Uniform" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Width="200" Height="200" Initialized="mediaPlayer_Initialized"/>
+							<Grid Grid.Row="1" Height="70">
+								<TextBlock Text="Full Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+							</Grid>
+						</Grid>
+					</Button>
+					<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.UpperBody}">
+						<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="1*"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<MediaElement Source=".\Media\bicep_curls.wmv" LoadedBehavior="Manual" Stretch="Uniform" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Width="200" Height="200" Initialized="mediaPlayer_Initialized"/>
+							<Grid Grid.Row="1" Height="70">
+								<TextBlock Text="Upper Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+							</Grid>
+						</Grid>
+					</Button>
+					<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.LowerBody}">
+						<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="1*"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<MediaElement Source=".\Media\lunges.wmv" LoadedBehavior="Manual" Stretch="Uniform" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Width="200" Height="200" Initialized="mediaPlayer_Initialized"/>
+							<Grid Grid.Row="1" Height="70">
+								<TextBlock Text="Lower Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+							</Grid>
+						</Grid>
+					</Button>
+				</StackPanel>
+
+				<TextBlock Grid.Row="3" HorizontalAlignment="Center">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource VersusHeader}">
+							<Setter Property="Text" Value="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades, StringFormat='{}{0} Stations Available'}" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="0">
+									<Setter Property="Text" Value="Sorry, all stations are in use." />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding ElementName=_this, Path=DataContext.Parent.NumAvailableArcades}" Value="1">
+									<Setter Property="Text" Value="1 Station Available" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+
 				<Image Grid.Row="5" HorizontalAlignment="Center" Source="/Versus-Kiosk.UI;component/Media/versus_blue_logo.png"  />
 			</Grid>
 		</DataTemplate>
@@ -84,13 +141,11 @@
 
 	<Grid>
 
-		<UserControl>
+		<UserControl x:Name="theControl">
 			<UserControl.Style>
 				<Style TargetType="{x:Type UserControl}">
+					<Setter Property="ContentTemplate" Value="{StaticResource connectedTemplate}" />
 					<Style.Triggers>
-						<DataTrigger Binding="{Binding Parent.Connected}" Value="False">
-							<Setter Property="ContentTemplate" Value="{StaticResource disconnectedTemplate}" />
-						</DataTrigger>
 						<DataTrigger Binding="{Binding Parent.Connected}" Value="True">
 							<Setter Property="ContentTemplate" Value="{StaticResource connectedTemplate}" />
 						</DataTrigger>
@@ -99,7 +154,10 @@
 			</UserControl.Style>
 		</UserControl>
 
-		<UserControl Background="Transparent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
+		<UserControl HorizontalAlignment="Left" Height="70" VerticalAlignment="Bottom" Width="70">
+			<UserControl.Background>
+				<ImageBrush ImageSource="../Media/key.png" />
+			</UserControl.Background>
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="PreviewMouseDown">
 					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.AdminButton_PreviewMouseDownCommand}" PassEventArgsToCommand="True" />
@@ -118,13 +176,13 @@
 			</i:Interaction.Triggers>
 		</UserControl>-->
 
-		<!--<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100">
+		<UserControl Background="Transparent" HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="100">
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="PreviewMouseDown">
 					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.SkipWarmUpsButton_PreviewMouseDownCommand}" PassEventArgsToCommand="True" />
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
-		</UserControl>-->
+		</UserControl>
 
 	</Grid>
 

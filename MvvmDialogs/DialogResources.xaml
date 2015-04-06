@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:presenters="clr-namespace:MvvmDialogs.Presenters"
+					xmlns:vm="clr-namespace:MvvmDialogs.ViewModels">
+
+	<presenters:MessageBoxPresenter x:Key="{x:Type vm:MessageBoxViewModel}" />
+
+</ResourceDictionary>

@@ -299,8 +299,7 @@
         <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
         <Setter Property="Padding" Value="3" />
 		<Setter Property="Margin" Value="10" />
-
-<Setter Property="Template" Value="{DynamicResource ButtonTemplate}" />
+		<Setter Property="Template" Value="{DynamicResource ButtonTemplate}" />
     </Style>
     
     <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
@@ -3931,5 +3930,356 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<Style x:Key="LeftButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+		<Setter Property="FocusVisualStyle" Value="{DynamicResource NuclearButtonFocusVisual}" />
+		<Setter Property="Foreground" Value="#FF042271" />
+		<Setter Property="FontFamily" Value="Trebuchet MS" />
+		<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+		<Setter Property="Padding" Value="3" />
+		<Setter Property="Margin" Value="10,10,1,10" />
+		<Setter Property="Template" Value="{DynamicResource LeftButtonTemplate}" />
+	</Style>
+
+	<ControlTemplate x:Key="LeftButtonTemplate" TargetType="{x:Type RadioButton}">
+		<ControlTemplate.Resources>
+			<Storyboard x:Key="HoverOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="1" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="HoverOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>			
+			<Storyboard x:Key="CheckedOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0.84" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="CheckedOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>
+			<!--
+			<Storyboard x:Key="DisabledOn">
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledOverlay" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+			</Storyboard>
+			<Storyboard x:Key="FocusedOn">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="1" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>
+			<Storyboard x:Key="FocusedOff">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="0" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>-->
+		</ControlTemplate.Resources>
+		<Grid x:Name="Grid">
+			<Border x:Name="BackgroundNorm" BorderThickness="1" CornerRadius="30,1.75,1.75,30" Background="{DynamicResource NormalBrush}" BorderBrush="{DynamicResource NormalBorderBrush}"/>
+			<Border x:Name="BackgroundOver" BorderThickness="1" CornerRadius="30,1.75,1.75,30" Opacity="0" Background="{DynamicResource MouseOverBrush}" BorderBrush="{DynamicResource MouseOverBorderBrush}"/>
+			<!--<Border x:Name="BackgroundOver_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource MouseOverHighlightBrush}"/>-->
+			<Border x:Name="BackgroundChecked" BorderThickness="1" CornerRadius="30,1.75,1.75,30" Opacity="0" Background="{DynamicResource PressedBrush}" BorderBrush="{DynamicResource PressedBorderBrush}"/>
+			<!--<Border x:Name="BackgoundPressed_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource PressedHighlightBrush}"/>-->
+			<!--<Border x:Name="DisabledVisualElement" IsHitTestVisible="false" Background="{DynamicResource DisabledBackgroundBrush}" BorderBrush="{DynamicResource DisabledBorderBrush}" BorderThickness="1" Opacity="0" />-->
+			<ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" />
+			<!--<TextBlock Panel.ZIndex="1" x:Name="DisabledOverlay" Text="{TemplateBinding Content}" Foreground="#FF8E96A2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" />
+			<Border x:Name="FocusVisualElement" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />
+			<Border x:Name="DefaultBorder" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />-->
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<!--<Trigger Property="IsDefault" Value="True">
+				<Setter Property="Opacity" TargetName="DefaultBorder" Value="1" />
+			</Trigger>-->
+			<!--<Trigger Property="IsFocused" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+			</Trigger>
+			<Trigger Property="IsKeyboardFocused" Value="true">
+
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard1" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard1" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+			-->
+			<Trigger Property="IsMouseOver" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOff}" x:Name="HoverOff_BeginStoryboard" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+
+			<Trigger Property="IsChecked" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOn}" />
+				</Trigger.EnterActions>
+			</Trigger>
+			<!--
+			<Trigger Property="IsEnabled" Value="true" />
+			<Trigger Property="IsEnabled" Value="false">
+				--><!--<Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource DisabledOn}" />
+                            </Trigger.EnterActions>--><!--
+				<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+				<Setter Property="Opacity" TargetName="DisabledVisualElement" Value="1" />
+			</Trigger>
+			-->
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<Style x:Key="MidButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+		<Setter Property="FocusVisualStyle" Value="{DynamicResource NuclearButtonFocusVisual}" />
+		<Setter Property="Foreground" Value="#FF042271" />
+		<Setter Property="FontFamily" Value="Trebuchet MS" />
+		<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+		<Setter Property="Padding" Value="3" />
+		<Setter Property="Margin" Value="1,10,1,10" />
+		<Setter Property="Template" Value="{DynamicResource MidButtonTemplate}" />
+	</Style>
+
+	<ControlTemplate x:Key="MidButtonTemplate" TargetType="{x:Type RadioButton}">
+		<ControlTemplate.Resources>
+			<Storyboard x:Key="HoverOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="1" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="HoverOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>
+			<Storyboard x:Key="CheckedOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0.84" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="CheckedOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>
+			<!--
+			<Storyboard x:Key="DisabledOn">
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledOverlay" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+			</Storyboard>
+			<Storyboard x:Key="FocusedOn">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="1" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>
+			<Storyboard x:Key="FocusedOff">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="0" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>-->
+		</ControlTemplate.Resources>
+		<Grid x:Name="Grid">
+			<Border x:Name="BackgroundNorm" BorderThickness="1" CornerRadius="1.75,1.75,1.75,1.75" Background="{DynamicResource NormalBrush}" BorderBrush="{DynamicResource NormalBorderBrush}"/>
+			<Border x:Name="BackgroundOver" BorderThickness="1" CornerRadius="1.75,1.75,1.75,1.75" Opacity="0" Background="{DynamicResource MouseOverBrush}" BorderBrush="{DynamicResource MouseOverBorderBrush}"/>
+			<!--<Border x:Name="BackgroundOver_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource MouseOverHighlightBrush}"/>-->
+			<Border x:Name="BackgroundChecked" BorderThickness="1" CornerRadius="1.75,1.75,1.75,1.75" Opacity="0" Background="{DynamicResource PressedBrush}" BorderBrush="{DynamicResource PressedBorderBrush}"/>
+			<!--<Border x:Name="BackgoundPressed_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource PressedHighlightBrush}"/>-->
+			<!--<Border x:Name="DisabledVisualElement" IsHitTestVisible="false" Background="{DynamicResource DisabledBackgroundBrush}" BorderBrush="{DynamicResource DisabledBorderBrush}" BorderThickness="1" Opacity="0" />-->
+			<ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" />
+			<!--<TextBlock Panel.ZIndex="1" x:Name="DisabledOverlay" Text="{TemplateBinding Content}" Foreground="#FF8E96A2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" />
+			<Border x:Name="FocusVisualElement" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />
+			<Border x:Name="DefaultBorder" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />-->
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<!--<Trigger Property="IsDefault" Value="True">
+				<Setter Property="Opacity" TargetName="DefaultBorder" Value="1" />
+			</Trigger>-->
+			<!--<Trigger Property="IsFocused" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+			</Trigger>
+			<Trigger Property="IsKeyboardFocused" Value="true">
+
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard1" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard1" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+			-->
+			<Trigger Property="IsMouseOver" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOff}" x:Name="HoverOff_BeginStoryboard" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+
+			<Trigger Property="IsChecked" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOn}" />
+				</Trigger.EnterActions>
+			</Trigger>
+			<!--
+			<Trigger Property="IsEnabled" Value="true" />
+			<Trigger Property="IsEnabled" Value="false">
+				-->
+			<!--<Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource DisabledOn}" />
+                            </Trigger.EnterActions>-->
+			<!--
+				<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+				<Setter Property="Opacity" TargetName="DisabledVisualElement" Value="1" />
+			</Trigger>
+			-->
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<Style x:Key="RightButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+		<Setter Property="FocusVisualStyle" Value="{DynamicResource NuclearButtonFocusVisual}" />
+		<Setter Property="Foreground" Value="#FF042271" />
+		<Setter Property="FontFamily" Value="Trebuchet MS" />
+		<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+		<Setter Property="Padding" Value="3" />
+		<Setter Property="Margin" Value="1,10,10,10" />
+		<Setter Property="Template" Value="{DynamicResource RightButtonTemplate}" />
+	</Style>
+
+	<ControlTemplate x:Key="RightButtonTemplate" TargetType="{x:Type RadioButton}">
+		<ControlTemplate.Resources>
+			<Storyboard x:Key="HoverOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="1" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="HoverOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundOver_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>
+			<Storyboard x:Key="CheckedOn">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0.84" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0.65" />-->
+			</Storyboard>
+			<Storyboard x:Key="CheckedOff">
+				<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgroundChecked" Storyboard.TargetProperty="Opacity" To="0" />
+				<!--<DoubleAnimation Duration="00:00:00.0000000" Storyboard.TargetName="BackgoundPressed_Highlight" Storyboard.TargetProperty="Opacity" To="0" />-->
+			</Storyboard>
+			<Storyboard x:Key="DisabledOn">
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+				<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="DisabledOverlay" Storyboard.TargetProperty="(UIElement.Visibility)">
+					<DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="{x:Static Visibility.Visible}" />
+				</ObjectAnimationUsingKeyFrames>
+			</Storyboard>
+			<!--
+			<Storyboard x:Key="FocusedOn">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="1" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>
+			<Storyboard x:Key="FocusedOff">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.0000000" Value="0" />
+				</DoubleAnimationUsingKeyFrames>
+
+			</Storyboard>-->
+		</ControlTemplate.Resources>
+		<Grid x:Name="Grid">
+			<Border x:Name="BackgroundNorm" BorderThickness="1" CornerRadius="1.75,30,30,1.75" Background="{DynamicResource NormalBrush}" BorderBrush="{DynamicResource NormalBorderBrush}"/>
+			<Border x:Name="BackgroundOver" BorderThickness="1" CornerRadius="1.75,30,30,1.75" Opacity="0" Background="{DynamicResource MouseOverBrush}" BorderBrush="{DynamicResource MouseOverBorderBrush}"/>
+			<!--<Border x:Name="BackgroundOver_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource MouseOverHighlightBrush}"/>-->
+			<Border x:Name="BackgroundChecked" BorderThickness="1" CornerRadius="1.75,30,30,1.75" Opacity="0" Background="{DynamicResource PressedBrush}" BorderBrush="{DynamicResource PressedBorderBrush}"/>
+			<!--<Border x:Name="BackgoundPressed_Highlight" Margin="1" BorderThickness="1,0,1,1" CornerRadius="1" Opacity="0" BorderBrush="{DynamicResource PressedHighlightBrush}"/>-->
+			<Border x:Name="DisabledVisualElement" IsHitTestVisible="false" CornerRadius="1.75,30,30,1.75" Background="{DynamicResource DisabledBackgroundBrush}" BorderBrush="{DynamicResource DisabledBorderBrush}" BorderThickness="1" Opacity="0" />
+			<ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" />
+			<TextBlock Panel.ZIndex="1" x:Name="DisabledOverlay" Text="{TemplateBinding Content}" Foreground="#FF8E96A2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" />
+			<!--<Border x:Name="FocusVisualElement" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />
+			<Border x:Name="DefaultBorder" Margin="-1" BorderBrush="{DynamicResource FocusBrush}" BorderThickness="1" CornerRadius="31,2.75,2.75,31" IsHitTestVisible="false" Opacity="0" />-->
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<!--<Trigger Property="IsDefault" Value="True">
+				<Setter Property="Opacity" TargetName="DefaultBorder" Value="1" />
+			</Trigger>-->
+			<!--<Trigger Property="IsFocused" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+			</Trigger>
+			<Trigger Property="IsKeyboardFocused" Value="true">
+
+				<Trigger.ExitActions>
+					<BeginStoryboard x:Name="FocusedOff_BeginStoryboard1" Storyboard="{StaticResource FocusedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard x:Name="FocusedOn_BeginStoryboard1" Storyboard="{StaticResource FocusedOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+			-->
+			<Trigger Property="IsMouseOver" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOff}" x:Name="HoverOff_BeginStoryboard" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource HoverOn}" />
+				</Trigger.EnterActions>
+
+			</Trigger>
+
+			<Trigger Property="IsChecked" Value="true">
+				<Trigger.ExitActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOff}" />
+				</Trigger.ExitActions>
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource CheckedOn}" />
+				</Trigger.EnterActions>
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="true" />
+			<Trigger Property="IsEnabled" Value="false">
+			<Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource DisabledOn}" />
+                            </Trigger.EnterActions>
+				<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+				<Setter Property="Opacity" TargetName="DisabledVisualElement" Value="1" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
 
 </ResourceDictionary>

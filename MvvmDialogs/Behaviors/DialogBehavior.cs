@@ -101,7 +101,7 @@ namespace MvvmDialogs.Behaviors
 			// is this resource a presenter?
 			if (IsAssignableToGenericType(resource.GetType(), typeof(IDialogBoxPresenter<>)))
 			{
-				resource.GetType().GetMethod("Show").Invoke(resource, new object[] { viewModel });
+				resource.GetType().GetMethod("Show").Invoke(resource, new object[] { viewModel, owner });
 				collection.Remove(viewModel);
 			}
 
