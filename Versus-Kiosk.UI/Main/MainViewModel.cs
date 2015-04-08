@@ -125,8 +125,6 @@ namespace VersusKiosk.UI.Main
 			if (this.IsInDesignMode)
 				return;
 
-			LoadUserSettings();
-
 			this.Comms.StationClient.OnConnectedToServer += StationClient_OnConnectedToServer;
 			this.Comms.StationClient.OnDisconnectedFromServer += StationClient_OnDisconnectedFromServer;
 			this.Comms.BroadcastListener += ProcessNetworkBroadcast;
@@ -157,6 +155,10 @@ namespace VersusKiosk.UI.Main
 			this.UpdateTimer.Start();
 		}
 
+		public void Dispose()
+		{
+		}
+
 		void UpdateTimer_Tick(object sender, EventArgs e)
 		{
 			// if we haven't heard from the server for a while then break the connection
@@ -173,11 +175,6 @@ namespace VersusKiosk.UI.Main
 			if (control_center_ip == null)
 				requestAutoDiscovery();
 			UpdateNextArcadeAvailable();
-		}
-
-		public void Dispose()
-		{
-			SaveUserSettings();
 		}
 
 		#region Networking
@@ -340,14 +337,6 @@ namespace VersusKiosk.UI.Main
 		private void OnClosed()
 		{
 			this.Dispose();
-		}
-
-		private void LoadUserSettings()
-		{
-		}
-
-		private void SaveUserSettings()
-		{
 		}
 
 		/*

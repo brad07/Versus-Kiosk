@@ -184,11 +184,29 @@ namespace VersusKiosk.UI.Pages
 
 		public override void ProcessNetworkMessage(dynamic msg)
 		{
-			// server has responded telling us a session is available
+			// server has responded telling us a session is available			
 			if (msg.cmd == "session_available")
-				this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", 0)));
+			{
+				if (VersusKiosk.UI.Properties.Settings.Default.DemoMode)
+					StartDemoMode();
+				else
+					this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", 0)));
+			}
 			else
 				this.Parent.SetPage(this.Injector.Get<IntroViewModel>()); // todo: notify the user - MJF
+		}
+
+		private void StartDemoMode()
+		{
+			for (int playerNum = 0; playerNum < this.Session.Players.Count(); playerNum++)
+			{
+				var player = this.Session.Players[playerNum];
+				player.FirstName = String.Format("Player {0}", playerNum + 1);
+				player.LastName = "";
+				player.Email = "";
+				player.Weight = "70";
+			}
+			this.Parent.SetPage(this.Injector.Get<StartViewModel>(new ConstructorArgument("session", this.Session)));
 		}
 
 		public ICommand LessCommand { get { return new RelayCommand(OnLess); } }

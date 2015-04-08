@@ -125,12 +125,12 @@
 			<Border.Effect>
 				<DropShadowEffect />
 			</Border.Effect>
-			<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
-				<MediaElement x:Name="mediaPlayer" Source="{Binding CurrentWorkout.MediaFile, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" Stretch="Uniform" Margin="10" MediaEnded="mediaPlayer_MediaEnded" />
+				<MediaElement HorizontalAlignment="Center" x:Name="mediaPlayer" Source="{Binding CurrentWorkout.MediaFile, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10" MediaEnded="mediaPlayer_MediaEnded" />
 				<TextBlock Grid.Row="1" Text="{Binding CurrentWorkout.Description}"  FontStyle="Italic" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" />
 			</Grid>
 		</Border>

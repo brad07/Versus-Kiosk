@@ -11,5 +11,8 @@
     <Setting Name="NetworkName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Genesis</Value>
     </Setting>
+    <Setting Name="DemoMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

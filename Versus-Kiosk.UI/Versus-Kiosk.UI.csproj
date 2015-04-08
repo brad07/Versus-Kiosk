@@ -87,6 +87,8 @@
     <Compile Include="Behaviors\PasswordBoxAssistant.cs" />
     <Compile Include="Behaviors\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="Behaviors\StateHelper.cs" />
+    <Compile Include="Commands\BindingProxy.cs" />
+    <Compile Include="Commands\InteractiveCommand.cs" />
     <Compile Include="Converters\BooleanToHiddenConverter.cs" />
     <Compile Include="Converters\EqualityConverter.cs" />
     <Compile Include="Converters\InversionConverter.cs" />

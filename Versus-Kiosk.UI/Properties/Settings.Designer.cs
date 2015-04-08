@@ -49,5 +49,17 @@ namespace VersusKiosk.UI.Properties {
                 return ((string)(this["NetworkName"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DemoMode {
+            get {
+                return ((bool)(this["DemoMode"]));
+            }
+            set {
+                this["DemoMode"] = value;
+            }
+        }
     }
 }
