@@ -65,11 +65,11 @@
 					</Button>
 				</StackPanel>-->
 
-				<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+				<!--<StackPanel Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
 					<Button Command="{Binding SkipWarmUpCommand}" Width="300" IsDefault="True">
 						<TextBlock Text="Skip Warm Up" Margin="20"/>
 					</Button>
-				</StackPanel>
+				</StackPanel>-->
 
 			</Grid>
 		</ControlTemplate>

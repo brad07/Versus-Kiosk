@@ -129,7 +129,7 @@ namespace VersusKiosk.UI.Pages
 
 		public override void ProcessNetworkMessage(dynamic msg)
 		{
-			if (msg.cmd == "arcade_state")
+			if (msg.cmd == "arcade_stations")
 				this.Stations = JsonConvert.DeserializeObject<List<StationViewModel>>(msg.stations.ToString());
 		}
 
