@@ -48,7 +48,10 @@ namespace VersusKiosk.UI.Pages
 			this.AdminButtonTimer.Tick += (s, e) =>
 			{
 				this.AdminButtonTimer.Stop();
-				this.Parent.SetPage(this.Injector.Get<AdminLoginViewModel>());
+				if (String.IsNullOrEmpty(Properties.Settings.Default.AdminPassword))
+					this.Parent.SetPage(this.Injector.Get<AdminViewModel>());
+				else
+					this.Parent.SetPage(this.Injector.Get<AdminLoginViewModel>());
 			};
 			this.AdminButtonTimer.Start();
 		}
