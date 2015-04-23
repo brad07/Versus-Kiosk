@@ -153,6 +153,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SetUp\InitialSetupView.xaml.cs">
+      <DependentUpon>InitialSetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SetUp\InitialSetupViewModel.cs" />
     <Compile Include="ViewModels\StationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SetUp\InitialSetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -220,6 +228,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Media\gear.png" />
     <Resource Include="ufonts.com_din-medium.ttf" />
   </ItemGroup>
   <ItemGroup>

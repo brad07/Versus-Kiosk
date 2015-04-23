@@ -135,7 +135,8 @@ namespace MvvmDialogs.Behaviors
 					DialogBoxes.Remove(userViewModel);
 					return;
 				};
-				dialog.Owner = owner;
+				if (owner.IsLoaded)
+					dialog.Owner = owner;
 				if (userViewModel.IsModal)
 					dialog.ShowDialog();
 				else

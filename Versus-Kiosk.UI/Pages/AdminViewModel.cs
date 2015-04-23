@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Ninject.Parameters;
 using MvvmDialogs.ViewModels;
 using System.Windows;
+using VersusKiosk.UI.SetUp;
 
 namespace VersusKiosk.UI.Pages
 {
@@ -76,6 +77,21 @@ namespace VersusKiosk.UI.Pages
 				this.Parent.ShutDown();
 		}
 
+		public ICommand SettingsCommand { get { return new RelayCommand(OnSettings); } }
+		private void OnSettings()
+		{
+			var result = Injector.Get<InitialSetupViewModel>().Show();
+			if (result)
+			{
+				new MessageBoxViewModel
+				{
+					Message = "Settings applied, please restart Kiosk.",
+					Image = MessageBoxImage.Information,
+					Buttons = MessageBoxButton.OK
+				}.Show(this.Parent.Dialogs);
+			}
+		}
+
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
 		private void OnOk()
 		{
@@ -125,6 +141,23 @@ namespace VersusKiosk.UI.Pages
 
 			if (result == MessageBoxResult.Yes)
 				this.Parent.SendStationCommand("stop_all");
+		}
+
+		public ICommand RebootAllCommand { get { return new RelayCommand(OnRebootAll); } }
+		private void OnRebootAll()
+		{
+			var result = new MessageBoxViewModel
+			{
+				Caption = "Reboot All?",
+				Message = "Stop all workouts and reboot all\nmachines including kiosk?",
+				Image = MessageBoxImage.Question,
+				Buttons = MessageBoxButton.YesNo
+			}.Show(this.Parent.Dialogs);
+
+			if (result == MessageBoxResult.Yes)
+			{
+				this.Parent.RebootAll();
+			}
 		}
 
 		public override void ProcessNetworkMessage(dynamic msg)

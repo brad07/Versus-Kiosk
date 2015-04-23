@@ -160,6 +160,9 @@
 			<Button Command="{Binding StopAllCommand}" Width="200" Margin="10,0,10,0">
 				<TextBlock Text="Stop All" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 			</Button>
+			<Button Command="{Binding RebootAllCommand}" Width="200" Margin="10,0,10,0">
+				<TextBlock Text="Reboot All" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+			</Button>
 		</StackPanel>
 
 		<StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="50">
@@ -167,6 +170,17 @@
 				<TextBlock Text="Ok" Margin="20" />
 			</Button>
 		</StackPanel>
+
+		<UserControl HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70">
+			<UserControl.Background>
+				<ImageBrush ImageSource="../Media/gear.png" />
+			</UserControl.Background>
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="PreviewMouseDown">
+					<cmd:EventToCommand Command="{Binding ElementName=_this, Path=DataContext.SettingsCommand}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</UserControl>
 
 		<UserControl HorizontalAlignment="Right" Height="70" VerticalAlignment="Top" Width="70">
 			<UserControl.Background>

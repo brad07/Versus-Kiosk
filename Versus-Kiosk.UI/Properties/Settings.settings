@@ -5,13 +5,16 @@
     <Setting Name="Port" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10060</Value>
     </Setting>
-    <Setting Name="AdminPassword" Type="System.String" Scope="Application">
+    <Setting Name="AdminPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">2580</Value>
     </Setting>
-    <Setting Name="NetworkName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Genesis</Value>
+    <Setting Name="NetworkName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Main</Value>
     </Setting>
     <Setting Name="DemoMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FirstRun" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

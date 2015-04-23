@@ -38,13 +38,6 @@ namespace VersusKiosk.Domain.Network
 		// Thread signal.
 		public static ManualResetEvent allDone = new ManualResetEvent(false);
 
-		/*
-		public void setGame(Game gme)
-		{
-			game = gme;
-		}
-		 * */
-
 		public void RequestStop()
 		{
 			_shouldStop = true;

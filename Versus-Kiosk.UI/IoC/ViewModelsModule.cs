@@ -8,6 +8,7 @@ using VersusKiosk.Domain.IoC;
 using VersusKiosk.UI.Hardware;
 using VersusKiosk.UI.Main;
 using VersusKiosk.UI.Pages;
+using VersusKiosk.UI.SetUp;
 
 namespace VersusKiosk.UI.IoC
 {
@@ -39,6 +40,7 @@ namespace VersusKiosk.UI.IoC
 
 			// dialogs
 			Bind<StationActionViewModel>().ToSelf();
+			Bind<InitialSetupViewModel>().ToSelf();
 		}
 	}
 }

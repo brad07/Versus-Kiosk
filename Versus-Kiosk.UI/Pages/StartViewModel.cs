@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -58,7 +59,13 @@ namespace VersusKiosk.UI.Pages
 
 		protected override void OnTick(TimeSpan elapsed)
 		{
-			if (!this.RequestingSessionStart)
+			if (this.RequestingSessionStart)
+			{
+				// if we don't hear back from the server then there's not much else we can do about it
+				if (elapsed.TotalSeconds > 5)
+					this.Parent.SetPage(this.Injector.Get<IntroViewModel>());
+			}
+			else
 			{
 				var remaining = this.StartTime.AddSeconds(this.Session.WorkoutType.StartTime) - DateTime.Now;
 				this.SecondsRemaining = (int)Math.Max(0, Math.Min(this.Session.WorkoutType.StartTime, remaining.TotalSeconds));
@@ -104,7 +111,26 @@ namespace VersusKiosk.UI.Pages
 	public class StationInfo
 	{
 		public Player Player { get; set; }
-		public string StationName { get; set; }
+
+		private string _StationName = "";
+		public string StationName
+		{
+			get
+			{
+				return this._StationName;
+			}
+			set
+			{
+				if (this._StationName != value)
+				{
+					this._StationName = value;
+					Regex rgx = new Regex("[^0-9]");
+					this.StationNumber = rgx.Replace(value, "");
+				}
+			}
+		}
+		
+		public string StationNumber { get; private set; }
 
 		public string DisplayName
 		{

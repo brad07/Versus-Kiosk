@@ -23,6 +23,7 @@ using VersusKiosk.Domain.IoC;
 using VersusKiosk.Domain.Network;
 using VersusKiosk.UI.Hardware;
 using VersusKiosk.UI.Pages;
+using VersusKiosk.UI.SetUp;
 
 namespace VersusKiosk.UI.Main
 {
@@ -125,6 +126,14 @@ namespace VersusKiosk.UI.Main
 			if (this.IsInDesignMode)
 				return;
 
+			/*
+			if (VersusKiosk.UI.Properties.Settings.Default.FirstRun)
+			{
+				Injector.Get<InitialSetupViewModel>().Show();
+				//VersusKiosk.UI.Properties.Settings.Default.FirstRun = false;				
+			}
+			 * */
+			
 			this.Comms.StationClient.OnConnectedToServer += StationClient_OnConnectedToServer;
 			this.Comms.StationClient.OnDisconnectedFromServer += StationClient_OnDisconnectedFromServer;
 			this.Comms.BroadcastListener += ProcessNetworkBroadcast;
@@ -460,6 +469,10 @@ namespace VersusKiosk.UI.Main
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
 
+		public void RebootALl()
+		{
+		}
+
 		private void UpdateNextArcadeAvailable()
 		{
 			int seconds = (int)Math.Round((this.NextArcadeAvailable - DateTime.Now).TotalSeconds);
@@ -473,6 +486,15 @@ namespace VersusKiosk.UI.Main
 		{
 			this.ShuttingDown = true;
 			Application.Current.MainWindow.Close();	// todo: this breaks mvvm, replace with an event
+		}
+
+		public void RebootAll()
+		{
+			dynamic msg = new System.Dynamic.ExpandoObject();
+			msg.cmd = "reboot_all";
+			msg.ip_address = LocalIPAddress().ToString();
+			if (control_center_ip != null)
+				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
 
 		public ICommand ClosingCommand { get { return new RelayCommand<CancelEventArgs>(OnClosing); } }

@@ -52,8 +52,8 @@
 				<TextBlock Grid.Row="2" Text="you'll be starting" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 				<TextBlock Grid.Row="3" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" >
 					<TextBlock.Text>
-						<MultiBinding StringFormat='{}on {0} in {1} seconds'>
-							<Binding Path="Stations[0].StationName" />
+						<MultiBinding StringFormat='{}on Station {0} in {1} seconds'>
+							<Binding Path="Stations[0].StationNumber" />
 							<Binding Path="SecondsRemaining" />
 						</MultiBinding>
 					</TextBlock.Text>
@@ -102,12 +102,14 @@
 				<ItemsControl Grid.Row="3" ItemsSource="{Binding Stations}" VerticalAlignment="Center">
 					<ItemsControl.ItemTemplate>
 						<ItemContainerTemplate>
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-								<TextBlock Text="{Binding DisplayName}" Style="{StaticResource VersusHeader}" />
-								<TextBlock Text="-" Style="{StaticResource VersusHeader}" />
-								<TextBlock Text="{Binding StationName}" Style="{StaticResource VersusHeader}" />
-							</StackPanel>
-							
+							<TextBlock HorizontalAlignment="Center" Style="{StaticResource VersusHeader}">
+								<TextBlock.Text>
+									<MultiBinding StringFormat="{}{0} - Station {1}">
+										<Binding Path="DisplayName" />
+										<Binding Path="StationNumber" />
+									</MultiBinding>
+								</TextBlock.Text>
+							</TextBlock>
 						</ItemContainerTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>

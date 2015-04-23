@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:page="clr-namespace:VersusKiosk.UI.Pages"
+					xmlns:setup="clr-namespace:VersusKiosk.UI.SetUp"
 					xmlns:sys="clr-namespace:System;assembly=mscorlib"
 					>
 	
@@ -49,6 +50,7 @@
 	<!-- Dialogs -->
 
 	<page:StationActionView x:Key="{x:Type page:StationActionViewModel}" x:Shared="False" />
+	<setup:InitialSetupView x:Key="{x:Type setup:InitialSetupViewModel}" x:Shared="False" />
 
 	<!-- Global Resources -->
 
