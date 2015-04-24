@@ -3,6 +3,7 @@ using Ninject;
 using Ninject.Parameters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -176,14 +177,20 @@ namespace VersusKiosk.UI.Pages
 		public ICommand NextCommand { get { return new RelayCommand(OnNext); } }
 		private void OnNext()
 		{
+			var appLog = new EventLog() { Source = "Kiosk" };
+			try { appLog.WriteEntry("Next command pressed."); } catch { }
 			var list = this.WorkoutMap[this.Duration];
 			this.Session.Workout = list[rng.Next(list.Length)];
 			this.Session.SetNumPlayers(this.NumPlayers);
+			try { appLog.WriteEntry(String.Format("Requesting session for {0} players.", this.NumPlayers)); } catch { }
 			this.Parent.RequestSessionAvailable(this.NumPlayers);
 		}
 
 		public override void ProcessNetworkMessage(dynamic msg)
 		{
+			var appLog = new EventLog() { Source = "Kiosk" };
+			try { appLog.WriteEntry(String.Format("Processing network message during choose workout: {0}.", msg.cmd.ToString())); } catch { }
+
 			// server has responded telling us a session is available			
 			if (msg.cmd == "session_available")
 			{
