@@ -199,7 +199,7 @@ namespace VersusKiosk.UI.Pages
 				else
 					this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", 0)));
 			}
-			else if (msg.cmd == "session_unavailable")
+			else
 				this.Parent.SetPage(this.Injector.Get<IntroViewModel>()); // todo: notify the user - MJF
 		}
 

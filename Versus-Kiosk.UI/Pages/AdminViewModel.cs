@@ -173,23 +173,6 @@ namespace VersusKiosk.UI.Pages
 			this.Parent.Dialogs.Add(dlg);
 		}
 
-		public ICommand EnableStationCommand { get { return new RelayCommand<StationViewModel>(OnEnableStation); } }
-		private void OnEnableStation(StationViewModel station)
-		{
-			this.Parent.SendStationCommand("enable_station", station.station_no);
-		}
-
-		public ICommand DisableStationCommand { get { return new RelayCommand<StationViewModel>(OnDisableStation); } }
-		private void OnDisableStation(StationViewModel station)
-		{
-			this.Parent.SendStationCommand("disable_station", station.station_no);
-		}
-
-		public ICommand RebootStationCommand { get { return new RelayCommand<StationViewModel>(OnRebootStation); } }
-		private void OnRebootStation(StationViewModel station)
-		{
-			this.Parent.SendStationCommand("reboot_station", station.station_no);
-		}
 
 	}
 }
