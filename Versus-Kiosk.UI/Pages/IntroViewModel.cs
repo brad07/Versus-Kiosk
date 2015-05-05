@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using VersusKiosk.Domain;
 using VersusKiosk.UI.Main;
+using VersusKiosk.UI.ViewModels;
 
 namespace VersusKiosk.UI.Pages
 {

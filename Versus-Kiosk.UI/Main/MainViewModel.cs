@@ -294,7 +294,6 @@ namespace VersusKiosk.UI.Main
 				dynamic msg = new System.Dynamic.ExpandoObject();
 				msg.cmd = "station_id";
 				msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
-				msg.ip_address = LocalIPAddress().ToString();
 				if (control_center_ip != null)
 				{
 					Console.WriteLine("*** SENDING STATION ID ***");
@@ -418,7 +417,6 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "request_arcade_session";
 			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
-			msg.ip_address = LocalIPAddress().ToString();
 			msg.num_players = numPlayers;
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
@@ -429,7 +427,6 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "start_arcade_session";
 			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
-			msg.ip_address = LocalIPAddress().ToString();
 			msg.session = session;
 			if (control_center_ip != null)
 			{
@@ -445,7 +442,6 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "request_player_details";
 			msg.email_address = player.Email;
-			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
@@ -454,7 +450,6 @@ namespace VersusKiosk.UI.Main
 		{
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "request_arcade_stations";
-			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
@@ -464,7 +459,6 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = command;
 			msg.station_no = station_no;
-			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
@@ -492,7 +486,6 @@ namespace VersusKiosk.UI.Main
 		{
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "reboot_all";
-			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
 		}
