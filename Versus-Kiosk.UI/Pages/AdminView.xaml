@@ -15,15 +15,9 @@
 			<Grid.RowDefinitions >
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="1*"/>
-				<!--<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />-->
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
@@ -70,20 +64,37 @@
 					</Style>
 				</TextBlock.Style>
 			</TextBlock>
-			<!--<TextBlock Grid.Row="2" Grid.Column="0" Text="Workout: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=ActiveSession.Session.Workout.model.name}" />
-			<TextBlock Grid.Row="3" Grid.Column="0" Text="Member: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=CurrentUser.name}" />
-			<TextBlock Grid.Row="4" Grid.Column="0" Text="Time: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=ActiveSession.WorkoutElapsedTime}" />
-			<TextBlock Grid.Row="5" Grid.Column="0" Text="Set: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=ActiveSession.Set}" />
-			<TextBlock Grid.Row="6" Grid.Column="0" Text="Rotation: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Path=ActiveSession.Rotation}" />
-			<TextBlock Grid.Row="7" Grid.Column="0" Text="Round: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Path=ActiveSession.Round}" />
-			<TextBlock Grid.Row="8" Grid.Column="0" Text="Activity: " FontWeight="Bold" HorizontalAlignment="Right" />
-			<TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Path=ActiveSession.Activity}" TextWrapping="Wrap" Grid.RowSpan="2" />-->
+
+			<Button Grid.Row="2" Grid.ColumnSpan="2" Width="150" Margin="10" >
+				<Button.Style>
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+						<Setter Property="Command" Value="{Binding ElementName=_this, Path=DataContext.DisableStationCommand}" />
+						<Setter Property="CommandParameter" Value="{Binding}" />
+						<Setter Property="Content">
+							<Setter.Value>
+								<TextBlock Text="Disable" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+							</Setter.Value>
+						</Setter>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding disabled}" Value="True">
+								<Setter Property="Command" Value="{Binding ElementName=_this, Path=DataContext.EnableStationCommand}" />
+								<Setter Property="CommandParameter" Value="{Binding}" />
+								<Setter Property="Content">
+									<Setter.Value>
+										<TextBlock Text="Enable" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+									</Setter.Value>
+								</Setter>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Button.Style>
+
+			</Button>
+
+			<Button Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding ElementName=_this, Path=DataContext.RebootStationCommand}" CommandParameter="{Binding}" Width="150" Margin="10" >
+				<TextBlock Text="Reboot" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+			</Button>
+
 		</Grid>
 
 		<DataTemplate x:Key="StationTemplate">
