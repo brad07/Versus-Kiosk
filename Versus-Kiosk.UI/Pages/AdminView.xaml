@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
 			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 			 xmlns:cmd ="http://www.galasoft.ch/mvvmlight"
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="720" d:DesignWidth="1200">
 	
 	<UserControl.Resources>
 
@@ -51,7 +51,18 @@
 					</Style>
 				</TextBlock.Style>
 			</TextBlock>
-			<TextBlock Grid.Row="1" Grid.Column="0" Text="Status: " FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" />
+			<TextBlock Grid.Row="1" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top">
+				<TextBlock.Style>
+					<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+						<Setter Property="Text" Value="Status: Not connected" />
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding connected}" Value="True">
+								<Setter Property="Text" Value="Status: Connected" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
 			<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Status}" VerticalAlignment="Top">
 				<TextBlock.Style>
 					<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -140,10 +151,10 @@
 		
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="300"/>
+			<RowDefinition Height="1*"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="150"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
 		<TextBlock Grid.Row="0" Text="Administration Panel" Style="{StaticResource VersusHeader}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -161,7 +172,7 @@
 			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
 
-		<StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="50">
+		<StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="30">
 			<Button Command="{Binding PowerOnCommand}" Width="200" Margin="10,0,10,0" >
 				<TextBlock Text="Power On" Margin="20" />
 			</Button>
@@ -176,7 +187,7 @@
 			</Button>
 		</StackPanel>
 
-		<StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="50">
+		<StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
 			<Button Command="{Binding OkCommand}" Width="200" Margin="100,0,100,0" IsDefault="True">
 				<TextBlock Text="Ok" Margin="20" />
 			</Button>
@@ -203,6 +214,8 @@
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 		</UserControl>
+
+		<TextBlock Grid.Row="4" Text="Versus Support Line: 1300-722-862 (support@versusfitness.com)" Padding="20" HorizontalAlignment="Center" FontFamily="Arial"/>
 
 	</Grid>
 </UserControl>
