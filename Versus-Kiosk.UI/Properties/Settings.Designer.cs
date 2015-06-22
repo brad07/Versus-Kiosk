@@ -79,5 +79,17 @@ namespace VersusKiosk.UI.Properties {
                 this["FirstRun"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ImperialUnits {
+            get {
+                return ((bool)(this["ImperialUnits"]));
+            }
+            set {
+                this["ImperialUnits"] = value;
+            }
+        }
     }
 }

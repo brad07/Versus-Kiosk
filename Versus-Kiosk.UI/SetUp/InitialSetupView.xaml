@@ -9,6 +9,7 @@
 			<RowDefinition />
 			<RowDefinition />
 			<RowDefinition />
+			<RowDefinition />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -24,7 +25,10 @@
 		<TextBlock Grid.Row="2" Text="Mode:" Margin="5" VerticalAlignment="Center" />
 		<ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" HorizontalAlignment="Left" MinWidth="150" VerticalAlignment="Center" />
 
-		<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+		<TextBlock Grid.Row="3" Text="Units:" Margin="5" VerticalAlignment="Center" />
+		<ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding UnitTypes}" SelectedItem="{Binding Units}" HorizontalAlignment="Left" MinWidth="150" VerticalAlignment="Center" />
+
+		<StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True" HorizontalAlignment="Right" Height="50" Width="120" Margin="20"/>
 			<Button Content="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right" Height="50" Width="120" Margin="20"/>
 		</StackPanel>

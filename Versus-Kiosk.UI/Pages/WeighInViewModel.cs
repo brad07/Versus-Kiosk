@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using VersusKiosk.Domain;
 using VersusKiosk.UI.Hardware;
+using VersusKiosk.UI.Properties;
 
 namespace VersusKiosk.UI.Pages
 {
@@ -17,6 +18,8 @@ namespace VersusKiosk.UI.Pages
 	{
 		private Session Session;
 		private int PlayerNum;
+
+		const double METRIC_SCALE = 0.453592; // number of kg in a pound
 
 		[Inject]
 		public Scales Scales { get; set; }
@@ -43,6 +46,8 @@ namespace VersusKiosk.UI.Pages
 			private set { this._ValidWeight = value; RaisePropertyChanged(() => this.ValidWeight); }
 		}
 
+		public bool ImperialUnits { get; private set; }
+
 		// true when scales are present, false otherwise
 		private WeighMode _WeighMode = WeighMode.Unknown;
 		public WeighMode WeighMode
@@ -55,7 +60,8 @@ namespace VersusKiosk.UI.Pages
 		{
 			this.Session = session;
 			this.PlayerNum = playerNum;
-			this.Player = session.Players[playerNum];			
+			this.Player = session.Players[playerNum];
+			this.ImperialUnits = Settings.Default.ImperialUnits;
 		}
 
 		public override void Initialize()
@@ -124,6 +130,13 @@ namespace VersusKiosk.UI.Pages
 		{
 			if (ValidateInput())
 			{
+				if (Settings.Default.ImperialUnits)
+				{
+					double metric = Int32.Parse(this.Player.Weight.Trim());
+					metric *= METRIC_SCALE;
+					this.Player.Weight = metric.ToString();
+				}
+
 				int nextPlayer = this.PlayerNum + 1;
 				if (nextPlayer < this.Session.Players.Count())
 					this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", nextPlayer)));
@@ -149,6 +162,8 @@ namespace VersusKiosk.UI.Pages
 
 		private static bool IsValidWeight(double weight)
 		{
+			if (Settings.Default.ImperialUnits)
+				weight *= METRIC_SCALE;
 			return (weight >= 40) && (weight <= 200);
 		}
 		

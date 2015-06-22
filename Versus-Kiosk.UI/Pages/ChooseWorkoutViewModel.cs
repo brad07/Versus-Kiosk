@@ -59,7 +59,7 @@ namespace VersusKiosk.UI.Pages
 			set { _NumPlayers = value; RaisePropertyChanged(() => this.NumPlayers); }
 		}
 
-		private int _Duration = 18;
+		private int _Duration = 12;
 		public int Duration
 		{
 			get { return this._Duration; }

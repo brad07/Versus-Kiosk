@@ -171,13 +171,20 @@ namespace VersusKiosk.UI.Main
 		void UpdateTimer_Tick(object sender, EventArgs e)
 		{
 			// if we haven't heard from the server for a while then break the connection
-			if (this.Connected)
+			//if (this.Connected)
 			{
-				var elapsed = DateTime.Now - this.LastServerMessage;
-				if (elapsed.TotalSeconds > 10)
+				try
 				{
-					this.Comms.disconnect();
-					this.control_center_ip = null;
+					var elapsed = DateTime.Now - this.LastServerMessage;
+					if (elapsed.TotalSeconds > 10)
+					{
+						this.Connected = false;
+						this.control_center_ip = null;
+						this.Comms.disconnect();
+					}
+				}
+				catch
+				{
 				}
 			}
 
@@ -467,10 +474,6 @@ namespace VersusKiosk.UI.Main
 			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
-		}
-
-		public void RebootALl()
-		{
 		}
 
 		private void UpdateNextArcadeAvailable()

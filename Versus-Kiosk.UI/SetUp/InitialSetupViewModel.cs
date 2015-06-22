@@ -50,11 +50,25 @@ namespace VersusKiosk.UI.SetUp
 			get { return this._Modes; }
 		}
 
+		private string _Units = "Metric";
+		public string Units
+		{
+			get { return this._Units; }
+			set { this._Units = value; RaisePropertyChanged(() => this.Units); }
+		}
+
+		private string[] _UnitTypes = new string[] { "Metric", "Imperial" };
+		public string[] UnitTypes
+		{
+			get { return this._UnitTypes; }
+		}
+
 		public InitialSetupViewModel()
 		{
 			this.NetworkName = Settings.Default.NetworkName;
 			this.AdminPassword = Settings.Default.AdminPassword;
 			this.Mode = Settings.Default.DemoMode ? "Demo" : "Normal";
+			this.Units = Settings.Default.ImperialUnits ? "Imperial" : "Metric";
 		}
 
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
@@ -63,6 +77,7 @@ namespace VersusKiosk.UI.SetUp
 			Settings.Default.NetworkName = this.NetworkName;
 			Settings.Default.AdminPassword = this.AdminPassword;
 			Settings.Default.DemoMode = (this.Mode == "Demo");
+			Settings.Default.ImperialUnits = (this.Units == "Imperial");
 			Settings.Default.Save();
 			this.Result = true;
 			this.RequestClose();
