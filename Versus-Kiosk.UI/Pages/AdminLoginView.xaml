@@ -7,6 +7,7 @@
 			 xmlns:behaviors="clr-namespace:VersusKiosk.UI.Behaviors"
              mc:Ignorable="d" 
              x:Name="_this"
+			 Background="White"
              d:DesignHeight="1024" d:DesignWidth="1200">
 
 	<Grid>

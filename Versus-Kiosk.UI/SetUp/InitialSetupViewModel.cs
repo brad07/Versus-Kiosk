@@ -23,6 +23,13 @@ namespace VersusKiosk.UI.SetUp
 		[Inject]
 		public MainViewModel Parent { get; set; }
 
+		private int _StationNo = 10060;
+		public int StationNo
+		{
+			get { return this._StationNo; }
+			set { this._StationNo = value; RaisePropertyChanged(() => this.StationNo); }
+		}
+
 		private string _NetworkName = "Versus";
 		public string NetworkName
 		{
@@ -65,6 +72,7 @@ namespace VersusKiosk.UI.SetUp
 
 		public InitialSetupViewModel()
 		{
+			this.StationNo = Settings.Default.StationNo;
 			this.NetworkName = Settings.Default.NetworkName;
 			this.AdminPassword = Settings.Default.AdminPassword;
 			this.Mode = Settings.Default.DemoMode ? "Demo" : "Normal";
@@ -74,6 +82,7 @@ namespace VersusKiosk.UI.SetUp
 		public ICommand OkCommand { get { return new RelayCommand(OnOk); } }
 		private void OnOk()
 		{
+			Settings.Default.StationNo = this.StationNo;
 			Settings.Default.NetworkName = this.NetworkName;
 			Settings.Default.AdminPassword = this.AdminPassword;
 			Settings.Default.DemoMode = (this.Mode == "Demo");

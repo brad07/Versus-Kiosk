@@ -118,6 +118,7 @@ namespace VersusKiosk.UI.Main
 		private int connect_retry_delay = 1;
 		private DateTime last_autodiscovery_request = DateTime.Now.AddDays(-1);
 		private DateTime LastServerMessage = DateTime.Now;
+		private DateTime LastPingTime = DateTime.Now;
 
 		private DispatcherTimer UpdateTimer;
 		
@@ -175,12 +176,25 @@ namespace VersusKiosk.UI.Main
 			{
 				try
 				{
-					var elapsed = DateTime.Now - this.LastServerMessage;
-					if (elapsed.TotalSeconds > 10)
+					var now = DateTime.Now;
+
+					// if we haven't heard from the server in over 5 seconds then forcibly break the connection
+					var elapsed = now - this.LastServerMessage;
+					if (elapsed.TotalSeconds >= 5)
 					{
+#if !DEBUG
 						this.Connected = false;
 						this.control_center_ip = null;
 						this.Comms.disconnect();
+#endif
+					}
+
+					// ping the server every 2 seconds
+					elapsed = now - this.LastPingTime;
+					if (elapsed.TotalSeconds >= 2)
+					{
+						this.LastPingTime = now;
+						PingServer();
 					}
 				}
 				catch
@@ -231,6 +245,11 @@ namespace VersusKiosk.UI.Main
 					this.NextArcadeAvailable = now.AddSeconds((int)msg.next_available);
 				}
 
+				else if (cmd == "ping")
+				{
+					// we've already made note of the time, no need to do anything else
+				}
+
 				else if (cmd == "set_workouts")
 				{
 					try
@@ -244,7 +263,6 @@ namespace VersusKiosk.UI.Main
 
 				// don't know what this message is so pass it to the currently active page
 				else
-					//this.CurrentPage.ProcessNetworkMessage(msg);
 					this.Pages.Last().ProcessNetworkMessage(msg);
 			}));
 		}
@@ -300,7 +318,7 @@ namespace VersusKiosk.UI.Main
 				this.Connected = true;
 				dynamic msg = new System.Dynamic.ExpandoObject();
 				msg.cmd = "station_id";
-				msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
+				msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 				msg.ip_address = LocalIPAddress().ToString();
 				if (control_center_ip != null)
 				{
@@ -333,7 +351,7 @@ namespace VersusKiosk.UI.Main
 				//log("Requesting AutoDiscovery");
 				dynamic msg = new System.Dynamic.ExpandoObject();
 				msg.cmd = "request_auto_discover";
-				msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
+				msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 				//log("Sending auto_discover msg using UDP");
 				Console.WriteLine("*** SENDING request_auto_discover ***");
 				this.Comms.sendUDPMsg(msg);
@@ -424,7 +442,7 @@ namespace VersusKiosk.UI.Main
 		{
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "request_arcade_session";
-			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
+			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 			msg.ip_address = LocalIPAddress().ToString();
 			msg.num_players = numPlayers;
 			if (control_center_ip != null)
@@ -435,7 +453,7 @@ namespace VersusKiosk.UI.Main
 		{
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "start_arcade_session";
-			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.Port;
+			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 			msg.ip_address = LocalIPAddress().ToString();
 			msg.session = session;
 			if (control_center_ip != null)
@@ -471,6 +489,16 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = command;
 			msg.station_no = station_no;
+			msg.ip_address = LocalIPAddress().ToString();
+			if (control_center_ip != null)
+				this.Comms.sendMsg(msg, control_center_ip, true);
+		}
+
+		public void PingServer()
+		{
+			dynamic msg = new System.Dynamic.ExpandoObject();
+			msg.cmd = "ping";
+			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);

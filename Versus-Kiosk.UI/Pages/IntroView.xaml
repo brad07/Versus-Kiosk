@@ -14,7 +14,7 @@
 
 		<Style x:Key="WorkoutButton" TargetType="{x:Type Button}">
 			<Setter Property="Width" Value="300" />
-			<Setter Property="Height" Value="350" />
+			<!--<Setter Property="Height" Value="340" />-->
 			<Setter Property="Visibility" Value="Visible" />
 			<Setter Property="Effect">
 				<Setter.Value>
@@ -86,7 +86,7 @@
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
 							<MediaElement HorizontalAlignment="Center" Source=".\Media\squat_and_press.wmv" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Height="200" Initialized="mediaPlayer_Initialized"/>
-							<Grid Grid.Row="1" Height="70">
+							<Grid Grid.Row="1" Height="90">
 								<TextBlock Text="Full Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
 							</Grid>
 						</Grid>
@@ -98,7 +98,7 @@
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
 							<MediaElement HorizontalAlignment="Center" Source=".\Media\bicep_curls.wmv" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Height="200" Initialized="mediaPlayer_Initialized"/>
-							<Grid Grid.Row="1" Height="70">
+							<Grid Grid.Row="1" Height="90">
 								<TextBlock Text="Upper Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
 							</Grid>
 						</Grid>
@@ -110,11 +110,23 @@
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
 							<MediaElement HorizontalAlignment="Center" Source=".\Media\lunges.wmv" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Height="200" Initialized="mediaPlayer_Initialized"/>
-							<Grid Grid.Row="1" Height="70">
+							<Grid Grid.Row="1" Height="90">
 								<TextBlock Text="Lower Body" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
 							</Grid>
 						</Grid>
 					</Button>
+					<!--<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.WorkoutOfTheWeek}">
+						<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="1*"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<MediaElement HorizontalAlignment="Center" Source=".\Media\lunges.wmv" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10,10,10,0" MediaEnded="mediaPlayer_MediaEnded" Height="200" Initialized="mediaPlayer_Initialized"/>
+							<Grid Grid.Row="1" Height="90">
+								<TextBlock Text="Workout Of&#x0a;The Week" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+							</Grid>
+						</Grid>
+					</Button>-->
 				</StackPanel>
 
 				<TextBlock Grid.Row="3" HorizontalAlignment="Center">

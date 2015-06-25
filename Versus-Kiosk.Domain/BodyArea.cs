@@ -10,6 +10,7 @@ namespace VersusKiosk.Domain
 	{
 		FullBody,
 		UpperBody,
-		LowerBody
+		LowerBody,
+		WorkoutOfTheWeek
 	}
 }

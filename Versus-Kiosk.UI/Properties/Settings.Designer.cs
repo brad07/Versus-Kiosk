@@ -23,12 +23,15 @@ namespace VersusKiosk.UI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10060")]
-        public int Port {
+        public int StationNo {
             get {
-                return ((int)(this["Port"]));
+                return ((int)(this["StationNo"]));
+            }
+            set {
+                this["StationNo"] = value;
             }
         }
         

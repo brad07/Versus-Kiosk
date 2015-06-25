@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VersusKiosk.UI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Port" Type="System.Int32" Scope="Application">
+    <Setting Name="StationNo" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10060</Value>
     </Setting>
     <Setting Name="AdminPassword" Type="System.String" Scope="User">

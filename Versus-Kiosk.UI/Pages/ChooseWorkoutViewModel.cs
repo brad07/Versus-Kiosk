@@ -77,6 +77,7 @@ namespace VersusKiosk.UI.Pages
 		public int LastDuration
 		{
 			get { return this._LastDuration; }
+
 			set { this._LastDuration = value; RaisePropertyChanged(() => this.LastDuration); }
 		}
 
@@ -199,8 +200,10 @@ namespace VersusKiosk.UI.Pages
 				else
 					this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", this.Session), new ConstructorArgument("playerNum", 0)));
 			}
+			/*
 			else
 				this.Parent.SetPage(this.Injector.Get<IntroViewModel>()); // todo: notify the user - MJF
+			*/
 		}
 
 		private void StartDemoMode()
