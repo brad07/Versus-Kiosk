@@ -52,7 +52,10 @@ namespace VersusKiosk.UI.Pages
 			this.Stations = new StationInfo[this.Session.Players.Count()];
 			for (int i=0; i<this.Session.Players.Count(); i++)
 				this.Stations[i] = new StationInfo { Player = this.Session.Players[i], StationName = ""};
-			
+
+			if (this.Session.BodyArea == BodyArea.WorkoutOfTheWeek)
+				this.Session.Workout = "WOW";
+
 			// request session start from CC in a seperate thread
 			this.MainViewModel.RequestSessionStart(this.Session);
 		}

@@ -34,7 +34,15 @@ namespace VersusKiosk.UI.Pages
 			if (this.Parent.NumAvailableArcades > 0)
 			{
 				var session = this.Injector.Get<Session>(new PropertyValue("BodyArea", area));
-				this.Parent.SetPage(this.Injector.Get<ChooseWorkoutViewModel>(new ConstructorArgument("session", session)));
+				if ((area == BodyArea.WorkoutOfTheWeek) && (this.Parent.NumAvailableArcades == 1))
+				{
+					session.SetNumPlayers(1);
+					this.Parent.SetPage(this.Injector.Get<EnterEmailViewModel>(new ConstructorArgument("session", session), new ConstructorArgument("playerNum", 0)));
+				}
+				else
+				{
+					this.Parent.SetPage(this.Injector.Get<ChooseWorkoutViewModel>(new ConstructorArgument("session", session)));
+				}
 			}
 		}
 

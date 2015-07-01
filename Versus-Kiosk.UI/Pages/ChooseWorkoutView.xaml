@@ -77,111 +77,194 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</ControlTemplate>
+		
+		<ControlTemplate x:Key="SelectPlayerTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="2*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<!-- 0: Top -->
+					<RowDefinition Height="60" />
+					<!-- 1: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 2: Players-->
+					<RowDefinition Height="Auto" />
+					<!-- 3: Seperator -->
+					<RowDefinition Height="1*" />
+					<!-- 4: Buttons -->
+					<RowDefinition Height="Auto" />
+					<!-- 5: Footer -->
+					<RowDefinition Height="80" />
+				</Grid.RowDefinitions>
+
+				<!-- Caption -->
+				<TextBlock Grid.Row="1" Grid.ColumnSpan="3" Text="Select Number of Players:" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource VersusHeader}" FontSize="{StaticResource VersusHeaderFontSize}" />
+
+				<!-- Players -->
+				<Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Visibility="{Binding MultiplayerAvailable, Converter={StaticResource BooleanToHiddenConverter}}" >
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="1*" />
+					</Grid.ColumnDefinitions>
+					<RadioButton Grid.Column="0" Height="60" Content="1" Command="{Binding SetNumPlayersCommand}" CommandParameter="1" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
+						<RadioButton.Style>
+							<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource LeftButton}">
+								<Setter Property="IsChecked" Value="True" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding NumPlayers}" Value="1">
+										<Setter Property="IsChecked" Value="True" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</RadioButton.Style>
+					</RadioButton>
+					<RadioButton Grid.Column="1" Height="60" Content="2" Command="{Binding SetNumPlayersCommand}" CommandParameter="2" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
+						<RadioButton.Style>
+							<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource RightButton}">
+								<Setter Property="IsChecked" Value="False" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding NumPlayers}" Value="2">
+										<Setter Property="IsChecked" Value="True" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</RadioButton.Style>
+					</RadioButton>
+				</Grid>
+
+				<!-- Buttons -->
+				<StackPanel Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+					<Button Command="{Binding CancelCommand}" Width="200" Margin="0,0,54,0" IsCancel="True" >
+						<TextBlock Text="Cancel" Margin="20"/>
+					</Button>
+					<Button Command="{Binding NextCommand}" Width="200" Margin="64,0,0,0" IsDefault="True" >
+						<TextBlock Text="Next" Margin="20"/>
+					</Button>
+				</StackPanel>
+
+			</Grid>
+		</ControlTemplate>
 
 	</UserControl.Resources>
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="3.5*"/>
-			<ColumnDefinition Width="2.5*"/>
-			<ColumnDefinition Width="2.5*"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<!-- 0: Caption -->
-			<RowDefinition Height="40" />
-			<!-- 1: Panels 1-->
-			<RowDefinition Height="Auto" />
-			<!-- 2: Panels 2-->
-			<RowDefinition Height="70" />
-			<!-- 3: Duration -->
-			<RowDefinition Height="Auto" />
-			<!-- 4: Gap -->
-			<RowDefinition Height="40" />
-			<!-- 5: Players-->
-			<RowDefinition Height="Auto" />
-			<!-- 6: Seperator -->
-			<RowDefinition Height="3*" />
-			<!-- 7: Buttons -->
-			<RowDefinition Height="Auto" />
-			<!-- 8: Footer -->
-			<RowDefinition Height="80" />
-		</Grid.RowDefinitions>
-
-		<!-- Caption -->
-		<!--<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="Please select your workout:" Style="{StaticResource VersusHeader}" FontSize="{StaticResource VersusSmallHeaderFontSize}" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
-
-		<!-- Panels -->
-		<TextBlock Grid.Row="1" Grid.Column="1" Text="Workout Type:" HorizontalAlignment="Right" VerticalAlignment="Top" />
-		<ListBox Grid.Row="1" Grid.Column="2" x:Name="workoutList" ItemsSource="{Binding Workouts}"
-				 SelectedIndex="{Binding CurrentWorkoutIndex, UpdateSourceTrigger=PropertyChanged}"
-				 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-			<ListBox.Effect>
-				<DropShadowEffect />
-			</ListBox.Effect>
-		</ListBox>
-		<Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,0,0,0" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True" Background="White" CornerRadius="10">
-			<Border.Effect>
-				<DropShadowEffect />
-			</Border.Effect>
-			<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<MediaElement HorizontalAlignment="Center" x:Name="mediaPlayer" Source="{Binding CurrentWorkout.MediaFile, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10" MediaEnded="mediaPlayer_MediaEnded" />
-				<TextBlock Grid.Row="1" Text="{Binding CurrentWorkout.Description}"  FontStyle="Italic" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" />
-			</Grid>
-		</Border>
-
-		<!-- Duration -->
-		<TextBlock Grid.Row="3" Grid.Column="1" Text="Duration:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-		<ContentControl Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Template="{StaticResource ButtonList}" />
-
-		<!-- Players -->
-		<TextBlock Grid.Row="5" Grid.Column="1" Text="Players:" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{Binding MultiplayerAvailable, Converter={StaticResource BooleanToHiddenConverter}}" />
-		<Grid Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Visibility="{Binding MultiplayerAvailable, Converter={StaticResource BooleanToHiddenConverter}}" >
+	<ContentControl>
+		<ContentControl.Style>
+			<Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
+				<Setter Property="Template" Value="{StaticResource SelectPlayerTemplate}" />
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding Session.BodyArea}" Value="{x:Static domain:BodyArea.WorkoutOfTheWeek}">
+						<Setter Property="Template" Value="{StaticResource SelectPlayerTemplate}" />
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</ContentControl.Style>
+		
+		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*" />
-				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="3.5*"/>
+				<ColumnDefinition Width="2.5*"/>
+				<ColumnDefinition Width="2.5*"/>
 			</Grid.ColumnDefinitions>
-			<RadioButton Grid.Column="0" Height="60" Content="1" Command="{Binding SetNumPlayersCommand}" CommandParameter="1" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
-				<RadioButton.Style>
-					<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource LeftButton}">
-						<Setter Property="IsChecked" Value="True" />
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding NumPlayers}" Value="1">
-								<Setter Property="IsChecked" Value="True" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</RadioButton.Style>
-			</RadioButton>
-			<RadioButton Grid.Column="1" Height="60" Content="2" Command="{Binding SetNumPlayersCommand}" CommandParameter="2" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
-				<RadioButton.Style>
-					<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource RightButton}">
-						<Setter Property="IsChecked" Value="False" />
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding NumPlayers}" Value="2">
-								<Setter Property="IsChecked" Value="True" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</RadioButton.Style>
-			</RadioButton>
+			<Grid.RowDefinitions>
+				<!-- 0: Caption -->
+				<RowDefinition Height="40" />
+				<!-- 1: Panels 1-->
+				<RowDefinition Height="Auto" />
+				<!-- 2: Panels 2-->
+				<RowDefinition Height="70" />
+				<!-- 3: Duration -->
+				<RowDefinition Height="Auto" />
+				<!-- 4: Gap -->
+				<RowDefinition Height="40" />
+				<!-- 5: Players-->
+				<RowDefinition Height="Auto" />
+				<!-- 6: Seperator -->
+				<RowDefinition Height="3*" />
+				<!-- 7: Buttons -->
+				<RowDefinition Height="Auto" />
+				<!-- 8: Footer -->
+				<RowDefinition Height="80" />
+			</Grid.RowDefinitions>
+
+			<!-- Caption -->
+			<!--<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="Please select your workout:" Style="{StaticResource VersusHeader}" FontSize="{StaticResource VersusSmallHeaderFontSize}" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+
+			<!-- Panels -->
+			<TextBlock Grid.Row="1" Grid.Column="1" Text="Workout Type:" HorizontalAlignment="Right" VerticalAlignment="Top" />
+			<ListBox Grid.Row="1" Grid.Column="2" x:Name="workoutList" ItemsSource="{Binding Workouts}"
+					 SelectedIndex="{Binding CurrentWorkoutIndex, UpdateSourceTrigger=PropertyChanged}"
+					 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+				<ListBox.Effect>
+					<DropShadowEffect />
+				</ListBox.Effect>
+			</ListBox>
+			<Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,0,0,0" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True" Background="White" CornerRadius="10">
+				<Border.Effect>
+					<DropShadowEffect />
+				</Border.Effect>
+				<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<MediaElement HorizontalAlignment="Center" x:Name="mediaPlayer" Source="{Binding CurrentWorkout.MediaFile, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" Stretch="UniformToFill" Margin="10" MediaEnded="mediaPlayer_MediaEnded" />
+					<TextBlock Grid.Row="1" Text="{Binding CurrentWorkout.Description}"  FontStyle="Italic" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" />
+				</Grid>
+			</Border>
+
+			<!-- Duration -->
+			<TextBlock Grid.Row="3" Grid.Column="1" Text="Duration:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+			<ContentControl Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Template="{StaticResource ButtonList}" />
+
+			<!-- Players -->
+			<TextBlock Grid.Row="5" Grid.Column="1" Text="Players:" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{Binding MultiplayerAvailable, Converter={StaticResource BooleanToHiddenConverter}}" />
+			<Grid Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Visibility="{Binding MultiplayerAvailable, Converter={StaticResource BooleanToHiddenConverter}}" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="1*" />
+				</Grid.ColumnDefinitions>
+				<RadioButton Grid.Column="0" Height="60" Content="1" Command="{Binding SetNumPlayersCommand}" CommandParameter="1" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
+					<RadioButton.Style>
+						<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource LeftButton}">
+							<Setter Property="IsChecked" Value="True" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding NumPlayers}" Value="1">
+									<Setter Property="IsChecked" Value="True" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</RadioButton.Style>
+				</RadioButton>
+				<RadioButton Grid.Column="1" Height="60" Content="2" Command="{Binding SetNumPlayersCommand}" CommandParameter="2" FontSize="{StaticResource LargeFont}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" >
+					<RadioButton.Style>
+						<Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource RightButton}">
+							<Setter Property="IsChecked" Value="False" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding NumPlayers}" Value="2">
+									<Setter Property="IsChecked" Value="True" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</RadioButton.Style>
+				</RadioButton>
+			</Grid>
+
+			<!-- Buttons -->
+			<StackPanel Grid.Row="7" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+				<Button Command="{Binding CancelCommand}" Width="200" Margin="0,0,54,0" IsCancel="True" >
+					<TextBlock Text="Cancel" Margin="20"/>
+				</Button>
+				<Button Command="{Binding NextCommand}" Width="200" Margin="64,0,0,0" IsDefault="True" >
+					<TextBlock Text="Next" Margin="20"/>
+				</Button>
+			</StackPanel>
+
 		</Grid>
-
-		<!-- Buttons -->
-		<StackPanel Grid.Row="7" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-			<Button Command="{Binding CancelCommand}" Width="200" Margin="0,0,54,0" IsCancel="True" >
-				<TextBlock Text="Cancel" Margin="20"/>
-			</Button>
-			<Button Command="{Binding NextCommand}" Width="200" Margin="64,0,0,0" IsDefault="True" >
-				<TextBlock Text="Next" Margin="20"/>
-			</Button>
-		</StackPanel>
-
-	</Grid>
+	</ContentControl>
 
 </UserControl>

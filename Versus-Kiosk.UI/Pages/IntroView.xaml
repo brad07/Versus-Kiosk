@@ -115,7 +115,7 @@
 							</Grid>
 						</Grid>
 					</Button>
-					<!--<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.WorkoutOfTheWeek}">
+					<Button Style="{StaticResource WorkoutButton}" Command="{Binding ElementName=_this, Path=DataContext.SelectBodyAreaCommand}" CommandParameter="{x:Static domain:BodyArea.WorkoutOfTheWeek}">
 						<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
 							<Grid.RowDefinitions>
 								<RowDefinition Height="1*"/>
@@ -126,7 +126,7 @@
 								<TextBlock Text="Workout Of&#x0a;The Week" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
 							</Grid>
 						</Grid>
-					</Button>-->
+					</Button>
 				</StackPanel>
 
 				<TextBlock Grid.Row="3" HorizontalAlignment="Center">
