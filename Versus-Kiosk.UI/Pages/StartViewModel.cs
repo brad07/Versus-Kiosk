@@ -81,6 +81,7 @@ namespace VersusKiosk.UI.Pages
 			if (msg.cmd == "session_starting")
 			{
 				this.Session.session_no = msg.session_no;
+
 				for (int i = 0; i < this.Stations.Count(); i++)
 					this.Stations[i].StationName = msg.stations[i];
 				this.RequestingSessionStart = false;

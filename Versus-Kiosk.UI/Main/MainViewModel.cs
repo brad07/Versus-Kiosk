@@ -470,6 +470,7 @@ namespace VersusKiosk.UI.Main
 			dynamic msg = new System.Dynamic.ExpandoObject();
 			msg.cmd = "request_player_details";
 			msg.email_address = player.Email;
+			msg.station_no = VersusKiosk.UI.Properties.Settings.Default.StationNo;
 			msg.ip_address = LocalIPAddress().ToString();
 			if (control_center_ip != null)
 				this.Comms.sendMsg(msg, control_center_ip, true);
